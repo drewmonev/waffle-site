@@ -82,7 +82,10 @@
     buttons 28 tall, tiles 23.2. The tiles were already 23 from the density
     rule, which is the one number that did not need changing. */
  .screen{padding:0}
- .ph-cover{position:absolute;top:0;left:0;right:0;height:120px;z-index:0;
+ .ph-cover{position:absolute;top:0;left:0;right:0;height:138px;z-index:0;   /* 18 past where the sheet starts, so the photo
+                              shows through the sheet's rounded top corners.
+                              At exactly 120 the notches were paper on paper
+                              and the radius was invisible. */
    background:#e6d9c4 center/cover no-repeat;
    background-image:url(img/cover.jpg);
    background-image:image-set(url(img/cover.webp) type("image/webp"),
