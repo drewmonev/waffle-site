@@ -91,6 +91,41 @@
  .g.in i{opacity:1;transform:none}
  .g i.empty{background:#efeae2}
  .g i.live{background:var(--gold)}
+
+ /* Real sunsets in the sunset waffle.
+    Eighteen photographs in one 288x144 sprite, 6.1KB, one request. Positioned
+    by PERCENTAGE rather than pixels, so it stays correct at whatever size the
+    grid computes its tiles to be. background-size:600% 300% scales the sheet
+    so one cell exactly fills one tile.
+    Eighteen photos cycling across forty-eight tiles is not a shortcut. A
+    sunset waffle IS the same sky over and over, which is the point of it.
+    The inline background colour on each tile stays underneath as the fallback,
+    so a failed sprite gives back exactly the old look. */
+ .g.sun i{background-image:url(img/sun-sprite.jpg);
+   background-image:image-set(url(img/sun-sprite.webp) type("image/webp"),
+                              url(img/sun-sprite.jpg) type("image/jpeg"));
+   background-size:600% 300%;background-repeat:no-repeat}
+ .g.sun i:nth-child(18n+1){background-position:0% 0%}
+ .g.sun i:nth-child(18n+2){background-position:20% 0%}
+ .g.sun i:nth-child(18n+3){background-position:40% 0%}
+ .g.sun i:nth-child(18n+4){background-position:60% 0%}
+ .g.sun i:nth-child(18n+5){background-position:80% 0%}
+ .g.sun i:nth-child(18n+6){background-position:100% 0%}
+ .g.sun i:nth-child(18n+7){background-position:0% 50%}
+ .g.sun i:nth-child(18n+8){background-position:20% 50%}
+ .g.sun i:nth-child(18n+9){background-position:40% 50%}
+ .g.sun i:nth-child(18n+10){background-position:60% 50%}
+ .g.sun i:nth-child(18n+11){background-position:80% 50%}
+ .g.sun i:nth-child(18n+12){background-position:100% 50%}
+ .g.sun i:nth-child(18n+13){background-position:0% 100%}
+ .g.sun i:nth-child(18n+14){background-position:20% 100%}
+ .g.sun i:nth-child(18n+15){background-position:40% 100%}
+ .g.sun i:nth-child(18n+16){background-position:60% 100%}
+ .g.sun i:nth-child(18n+17){background-position:80% 100%}
+ .g.sun i:nth-child(18n+18){background-position:100% 100%}
+ /* Today's pocket stays gold. It is the one tile that is not a photograph. */
+ .g.sun i.live{background-image:none}
+
  .g.in i.live{animation:pulse 2.2s ease-in-out infinite 1.2s}
  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(217,164,65,.55)}55%{box-shadow:0 0 0 5px rgba(217,164,65,0)}}
 
@@ -489,8 +524,8 @@
           <div class="g" style="grid-template-columns:repeat(12,1fr)"><i style="background:#bfae95"></i><i style="background:#d2bfa2"></i><i style="background:#bfae95"></i><i style="background:#bfae95"></i><i style="background:#d2bfa2"></i><i style="background:#c2ad8f"></i><i style="background:#a89680"></i><i style="background:#d6c4a8"></i><i style="background:#d2bfa2"></i><i style="background:#bfae95"></i><i style="background:#c2ad8f"></i><i style="background:#d6c4a8"></i><i style="background:#b8a68d"></i><i style="background:#bfae95"></i><i style="background:#e0d0b6"></i><i style="background:#d6c4a8"></i><i style="background:#b8a68d"></i><i style="background:#d2bfa2"></i><i style="background:#c9b79c"></i><i style="background:#c2ad8f"></i><i style="background:#cbbda6"></i><i style="background:#bfae95"></i><i style="background:#c2ad8f"></i><i style="background:#d6c4a8"></i><i style="background:#c2ad8f"></i><i style="background:#c9b79c"></i><i style="background:#d2bfa2"></i><i style="background:#b8a68d"></i><i style="background:#c9b79c"></i><i style="background:#c9b79c"></i><i style="background:#a89680"></i><i style="background:#a89680"></i><i style="background:#c2ad8f"></i><i style="background:#c9b79c"></i><i style="background:#bfae95"></i><i style="background:#9d8d78"></i><i style="background:#bfae95"></i><i style="background:#c2ad8f"></i><i style="background:#a89680"></i><i style="background:#d2bfa2"></i><i style="background:#a89680"></i><i style="background:#e0d0b6"></i><i style="background:#bfae95"></i><i style="background:#c9b79c"></i><i style="background:#b8a68d"></i><i style="background:#bfae95"></i><i style="background:#e0d0b6"></i><i style="background:#cbbda6"></i><i style="background:#d2bfa2"></i><i style="background:#b8a68d"></i><i style="background:#e0d0b6"></i><i style="background:#9d8d78"></i><i style="background:#a89680"></i><i style="background:#d2bfa2"></i><i style="background:#e0d0b6"></i><i style="background:#c9b79c"></i><i style="background:#b8a68d"></i><i style="background:#c2ad8f"></i><i style="background:#b8a68d"></i><i style="background:#cbbda6"></i><i style="background:#b8a68d"></i><i style="background:#e0d0b6"></i><i style="background:#cbbda6"></i><i style="background:#b8a68d"></i><i style="background:#c9b79c"></i><i style="background:#c9b79c"></i><i style="background:#a89680"></i><i style="background:#a89680"></i><i style="background:#c9b79c"></i><i style="background:#bfae95"></i><i style="background:#cbbda6"></i><i style="background:#cbbda6"></i><i style="background:#cbbda6"></i><i style="background:#b8a68d"></i><i style="background:#c2ad8f"></i><i style="background:#a89680"></i><i style="background:#e0d0b6"></i><i style="background:#9d8d78"></i><i style="background:#b8a68d"></i><i style="background:#e0d0b6"></i><i style="background:#9d8d78"></i><i style="background:#c9b79c"></i><i style="background:#cbbda6"></i><i style="background:#b8a68d"></i><i style="background:#d6c4a8"></i><i style="background:#a89680"></i><i style="background:#b8a68d"></i><i style="background:#c9b79c"></i><i style="background:#c9b79c"></i><i style="background:#bfae95"></i><i style="background:#bfae95"></i><i style="background:#d6c4a8"></i><i style="background:#d2bfa2"></i><i style="background:#a89680"></i><i style="background:#bfae95"></i><i style="background:#d2bfa2"></i></div>
         </div>
         <div class="wcard">
-          <div class="wtop"><span class="wdot" style="background:#c07a3c"></span><span class="wname">Sunset with Michelle</span><span class="wcount">48</span></div>
-          <div class="g" style="grid-template-columns:repeat(12,1fr)"><i style="background:#a89680"></i><i style="background:#d6c4a8"></i><i style="background:#cbbda6"></i><i style="background:#cbbda6"></i><i style="background:#b8a68d"></i><i style="background:#cbbda6"></i><i style="background:#cbbda6"></i><i style="background:#a89680"></i><i style="background:#c9b79c"></i><i style="background:#e0d0b6"></i><i style="background:#c2ad8f"></i><i style="background:#e0d0b6"></i><i style="background:#c9b79c"></i><i style="background:#a89680"></i><i style="background:#d6c4a8"></i><i style="background:#cbbda6"></i><i style="background:#c2ad8f"></i><i style="background:#c2ad8f"></i><i style="background:#b8a68d"></i><i style="background:#c9b79c"></i><i style="background:#d6c4a8"></i><i style="background:#a89680"></i><i style="background:#bfae95"></i><i style="background:#e0d0b6"></i><i style="background:#c9b79c"></i><i style="background:#c2ad8f"></i><i style="background:#9d8d78"></i><i style="background:#e0d0b6"></i><i style="background:#cbbda6"></i><i style="background:#b8a68d"></i><i style="background:#b8a68d"></i><i style="background:#b8a68d"></i><i style="background:#a89680"></i><i style="background:#c2ad8f"></i><i style="background:#a89680"></i><i style="background:#c9b79c"></i><i style="background:#c2ad8f"></i><i style="background:#9d8d78"></i><i style="background:#9d8d78"></i><i style="background:#c2ad8f"></i><i style="background:#bfae95"></i><i style="background:#d6c4a8"></i><i style="background:#c2ad8f"></i><i style="background:#bfae95"></i><i class="live"></i><i class="empty"></i><i class="empty"></i><i class="empty"></i></div>
+          <div class="wtop"><span class="wdot" style="background:#c07a3c"></span><span class="wname">Sunset with Michelle</span><span class="wcount">19</span></div>
+          <div class="g sun" style="grid-template-columns:repeat(12,1fr)"><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#cbbda6"></i><i style="background-color:#b8a68d"></i><i style="background-color:#cbbda6"></i><i style="background-color:#cbbda6"></i><i style="background-color:#a89680"></i><i style="background-color:#c9b79c"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#c9b79c"></i><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#c2ad8f"></i><i class="live"></i></div>
         </div>
         <div class="wcard">
           <div class="wtop"><span class="wdot" style="background:#7a8a4a"></span><span class="wname">Bouldering</span><span class="wcount">43</span></div>
