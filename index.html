@@ -346,20 +346,40 @@
     browser's own [hidden]{display:none} — so `ok.hidden = false` could never
     reveal it and the success message never appeared. State now lives in one
     class on the FORM, so nothing has to out-specify a UA default. */
- .signup .ok{display:none;gap:11px;align-items:flex-start;margin-top:14px;
-   padding:15px 17px;border-radius:14px;background:#fdf8ec;border:1px solid #efdfba}
- .signup.sent .ok{display:flex;animation:okin .34s cubic-bezier(.16,1,.3,1) both}
+ /* The old rule set display:none on .ok unconditionally, which beats the
+    browser's own [hidden]{display:none} — so `ok.hidden = false` could never
+    reveal it. State lives in one class on the FORM now, so nothing has to
+    out-specify a UA default. */
+ .signup .ok{display:none;align-items:baseline;gap:8px;margin-top:16px;
+   font-size:15px;line-height:1.45;color:var(--ink2)}
+ .signup.sent .ok{display:flex;animation:okin .4s cubic-bezier(.16,1,.3,1) both}
  .signup.sent input,.signup.sent button{display:none}
- /* The fine print under each form says the same thing the confirmation now
-    says, so it retires once the confirmation is up. Adjacent sibling: the
-    <p> sits after the form, not inside it. */
+ /* The fine print under each form says what the confirmation now says. */
  .signup.sent + .finep{display:none}
- @keyframes okin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
- .ok-tick{flex:0 0 auto;width:19px;height:19px;color:var(--gold2);margin-top:1px}
- .ok-body{display:flex;flex-direction:column;gap:3px;min-width:0}
- .ok-t{font-size:15px;font-weight:600;color:var(--ink);line-height:1.3}
- .ok-s{font-size:13.5px;color:var(--ink2);line-height:1.45;word-break:break-word}
- .ok-mail{font-weight:600;color:var(--ink)}
+ @keyframes okin{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+ .ok b{color:var(--ink);font-weight:600}
+ .ok-mail{color:var(--ink3);word-break:break-all}
+ .ok-tick{flex:0 0 auto;width:17px;height:17px;color:var(--gold2);align-self:center}
+ .signup.sent .ok-tick{animation:tickpop .5s cubic-bezier(.34,1.56,.64,1) .06s both}
+ @keyframes tickpop{0%{transform:scale(.2) rotate(-25deg);opacity:0}
+   60%{transform:scale(1.18) rotate(4deg);opacity:1}100%{transform:none;opacity:1}}
+
+ /* Confetti, reusing the piece idiom from the milestone card above — and the
+    same palette as src/components/confetti.tsx, so it is one object across the
+    app and the site. One shot: a loop would be irritating on a page people
+    linger on. Pieces are inert until .sent lands, which is what makes this a
+    reaction rather than decoration. */
+ .conf-sign{position:absolute;left:-24px;right:-24px;top:-34px;bottom:-52px;
+   border-radius:0;z-index:3}
+ .conf-sign i{animation-name:none}
+ .signup.sent .conf-sign i{animation-name:fallsign;animation-timing-function:linear;
+   animation-iteration-count:1;animation-fill-mode:both}
+ @keyframes fallsign{0%{transform:translateY(0) rotate(0);opacity:0}
+   12%{opacity:1}70%{opacity:1}100%{transform:translateY(210px) rotate(var(--spin));opacity:0}}
+ @media(prefers-reduced-motion:reduce){
+   .signup.sent .conf-sign i{animation:none;display:none}
+   .signup.sent .ok,.signup.sent .ok-tick{animation:none}
+ }
  .msg{display:none;margin-top:10px;font-size:13.5px;line-height:1.45;color:#b3402e}
  .signup.bad .msg{display:block}
  .signup.bad input{border-color:#e5c4bb}
@@ -434,10 +454,11 @@
 <form class="signup rev d2" id="f-hero" novalidate>
       <input type="email" placeholder="you@email.com" aria-label="Email address" required>
       <button type="submit" aria-label="Get early access"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg></button>
-      <div class="ok" role="status" aria-live="polite">
-        <svg class="ok-tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.6l4 4 8-9"/></svg>
-        <span class="ok-body"><b class="ok-t">You&#8217;re on the list.</b><span class="ok-s">One email to <span class="ok-mail"></span>, the day it launches.</span></span>
-      </div>
+      <div class="conf conf-sign" aria-hidden="true"><i style="left:1.0%;width:6px;height:6px;background:#d9a441;animation-delay:0.00s;animation-duration:1.30s;--spin:360deg"></i><i style="left:6.5%;width:7px;height:7px;background:#e8bd68;animation-delay:0.22s;animation-duration:1.57s;--spin:457deg"></i><i style="left:7.0%;width:8px;height:8px;background:#f7d074;animation-delay:0.04s;animation-duration:1.84s;--spin:554deg"></i><i style="left:19.0%;width:9px;height:9px;background:#b07f22;animation-delay:0.26s;animation-duration:2.11s;--spin:651deg"></i><i style="left:19.5%;width:10px;height:10px;background:#d9a441;animation-delay:0.08s;animation-duration:1.53s;--spin:388deg"></i><i style="left:20.0%;width:11px;height:11px;background:#e8bd68;animation-delay:0.29s;animation-duration:1.80s;--spin:485deg"></i><i style="left:32.0%;width:6px;height:6px;background:#f7d074;animation-delay:0.11s;animation-duration:2.08s;--spin:582deg"></i><i style="left:32.5%;width:7px;height:7px;background:#b07f22;animation-delay:0.33s;animation-duration:1.50s;--spin:679deg"></i><i style="left:44.5%;width:8px;height:8px;background:#d9a441;animation-delay:0.15s;animation-duration:1.77s;--spin:416deg"></i><i style="left:45.0%;width:9px;height:9px;background:#e8bd68;animation-delay:0.37s;animation-duration:2.04s;--spin:513deg"></i><i style="left:45.5%;width:10px;height:10px;background:#f7d074;animation-delay:0.19s;animation-duration:1.46s;--spin:610deg"></i><i style="left:57.5%;width:11px;height:11px;background:#b07f22;animation-delay:0.01s;animation-duration:1.73s;--spin:707deg"></i><i style="left:58.0%;width:6px;height:6px;background:#d9a441;animation-delay:0.23s;animation-duration:2.00s;--spin:444deg"></i><i style="left:70.0%;width:7px;height:7px;background:#e8bd68;animation-delay:0.05s;animation-duration:1.42s;--spin:541deg"></i><i style="left:70.5%;width:8px;height:8px;background:#f7d074;animation-delay:0.27s;animation-duration:1.69s;--spin:638deg"></i><i style="left:71.0%;width:9px;height:9px;background:#b07f22;animation-delay:0.09s;animation-duration:1.97s;--spin:375deg"></i><i style="left:83.0%;width:10px;height:10px;background:#d9a441;animation-delay:0.30s;animation-duration:1.39s;--spin:472deg"></i><i style="left:83.5%;width:11px;height:11px;background:#e8bd68;animation-delay:0.12s;animation-duration:1.66s;--spin:569deg"></i><i style="left:95.0%;width:6px;height:6px;background:#f7d074;animation-delay:0.34s;animation-duration:1.93s;--spin:666deg"></i><i style="left:95.0%;width:7px;height:7px;background:#b07f22;animation-delay:0.16s;animation-duration:1.35s;--spin:403deg"></i></div>
+      <p class="ok" role="status" aria-live="polite">
+        <svg class="ok-tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.6l4 4 8-9"/></svg>
+        <b>You&#8217;re on the list.</b> <span class="ok-mail"></span>
+      </p>
       <p class="msg" role="alert" aria-live="assertive"></p>
     </form>
     <p class="finep rev d3">Nothing but one email when it launches.</p>
@@ -585,10 +606,11 @@
   <form class="signup big" id="f-close" novalidate>
       <input type="email" placeholder="you@email.com" aria-label="Email address" required>
       <button type="submit" aria-label="Get early access"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg></button>
-      <div class="ok" role="status" aria-live="polite">
-        <svg class="ok-tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.6l4 4 8-9"/></svg>
-        <span class="ok-body"><b class="ok-t">You&#8217;re on the list.</b><span class="ok-s">One email to <span class="ok-mail"></span>, the day it launches.</span></span>
-      </div>
+      <div class="conf conf-sign" aria-hidden="true"><i style="left:1.0%;width:6px;height:6px;background:#d9a441;animation-delay:0.00s;animation-duration:1.30s;--spin:360deg"></i><i style="left:6.5%;width:7px;height:7px;background:#e8bd68;animation-delay:0.22s;animation-duration:1.57s;--spin:457deg"></i><i style="left:7.0%;width:8px;height:8px;background:#f7d074;animation-delay:0.04s;animation-duration:1.84s;--spin:554deg"></i><i style="left:19.0%;width:9px;height:9px;background:#b07f22;animation-delay:0.26s;animation-duration:2.11s;--spin:651deg"></i><i style="left:19.5%;width:10px;height:10px;background:#d9a441;animation-delay:0.08s;animation-duration:1.53s;--spin:388deg"></i><i style="left:20.0%;width:11px;height:11px;background:#e8bd68;animation-delay:0.29s;animation-duration:1.80s;--spin:485deg"></i><i style="left:32.0%;width:6px;height:6px;background:#f7d074;animation-delay:0.11s;animation-duration:2.08s;--spin:582deg"></i><i style="left:32.5%;width:7px;height:7px;background:#b07f22;animation-delay:0.33s;animation-duration:1.50s;--spin:679deg"></i><i style="left:44.5%;width:8px;height:8px;background:#d9a441;animation-delay:0.15s;animation-duration:1.77s;--spin:416deg"></i><i style="left:45.0%;width:9px;height:9px;background:#e8bd68;animation-delay:0.37s;animation-duration:2.04s;--spin:513deg"></i><i style="left:45.5%;width:10px;height:10px;background:#f7d074;animation-delay:0.19s;animation-duration:1.46s;--spin:610deg"></i><i style="left:57.5%;width:11px;height:11px;background:#b07f22;animation-delay:0.01s;animation-duration:1.73s;--spin:707deg"></i><i style="left:58.0%;width:6px;height:6px;background:#d9a441;animation-delay:0.23s;animation-duration:2.00s;--spin:444deg"></i><i style="left:70.0%;width:7px;height:7px;background:#e8bd68;animation-delay:0.05s;animation-duration:1.42s;--spin:541deg"></i><i style="left:70.5%;width:8px;height:8px;background:#f7d074;animation-delay:0.27s;animation-duration:1.69s;--spin:638deg"></i><i style="left:71.0%;width:9px;height:9px;background:#b07f22;animation-delay:0.09s;animation-duration:1.97s;--spin:375deg"></i><i style="left:83.0%;width:10px;height:10px;background:#d9a441;animation-delay:0.30s;animation-duration:1.39s;--spin:472deg"></i><i style="left:83.5%;width:11px;height:11px;background:#e8bd68;animation-delay:0.12s;animation-duration:1.66s;--spin:569deg"></i><i style="left:95.0%;width:6px;height:6px;background:#f7d074;animation-delay:0.34s;animation-duration:1.93s;--spin:666deg"></i><i style="left:95.0%;width:7px;height:7px;background:#b07f22;animation-delay:0.16s;animation-duration:1.35s;--spin:403deg"></i></div>
+      <p class="ok" role="status" aria-live="polite">
+        <svg class="ok-tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.6l4 4 8-9"/></svg>
+        <b>You&#8217;re on the list.</b> <span class="ok-mail"></span>
+      </p>
       <p class="msg" role="alert" aria-live="assertive"></p>
     </form>
   <p class="finep">No spam, no launch countdown emails. One message when it&#8217;s ready.</p>
