@@ -76,37 +76,52 @@
  .sb-r{display:flex;gap:4px;align-items:center} .sb-r svg{width:13px;height:13px}
  .ph-top{display:flex;align-items:center;justify-content:space-between;margin:14px 2px 16px}
 
- /* ---------- the plate header inside the phone ---------- */
- /* The cover breaks the screen's 14px padding, the way it does in the app. */
- /* Pinned to the top of the screen rather than sitting below the wordmark,
-    so the yellow runs from the very top. The screen's own overflow:hidden and
-    38px radius clip the top corners, so only the bottom two are rounded here.
-    Everything else in the screen is lifted above it. */
- .ph-cover{position:absolute;top:0;left:0;right:0;height:138px;
-   border-radius:0 0 16px 16px;z-index:0;
-   background:linear-gradient(135deg,#fdf3df,#f6e7c8)}
- .screen > .sb,.screen > .ph-top,.screen > .ph-id,
- .screen > .ph-actions,.screen > .wcard{position:relative;z-index:1}
- .ph-id{display:flex;align-items:flex-end;gap:8px;margin:22px 0 0}
- .ph-av{width:46px;height:46px;border-radius:50%;overflow:hidden;flex:0 0 auto;
-   border:3px solid var(--paper);background:#f7d074;display:block}
+ /* ---------- the plate, matching the real screen ----------
+    Proportions taken off a screenshot of app/(app)/(tabs)/plate.tsx at 923px
+    wide and scaled to this 274px screen: cover 145, avatar 65, name 15.4,
+    buttons 28 tall, tiles 23.2. The tiles were already 23 from the density
+    rule, which is the one number that did not need changing. */
+ .screen{padding:0}
+ .ph-cover{position:absolute;top:0;left:0;right:0;height:120px;z-index:0;
+   background:#e6d9c4 center/cover no-repeat;
+   background-image:url(img/cover.jpg);
+   background-image:image-set(url(img/cover.webp) type("image/webp"),
+                              url(img/cover.jpg) type("image/jpeg"))}
+ .screen > .sb{position:relative;z-index:2;color:#fff;padding:13px 16px 0}
+ .ph-top{position:relative;z-index:2;display:flex;align-items:center;
+   justify-content:space-between;padding:10px 16px 0;color:#fff}
+ .ph-top .wm{font-size:19px;color:#fff}
+ .ph-icons{display:flex;gap:13px;align-items:center}
+ .ph-icons svg{width:17px;height:17px;display:block;opacity:.95}
+ /* The content is a sheet that begins where the cover ends, with the avatar
+    breaking its top edge. */
+ .ph-sheet{position:relative;z-index:1;margin-top:72px;background:var(--paper);
+   border-radius:18px 18px 0 0;padding:0 13px 10px;min-height:200px}
+ .ph-id{display:flex;align-items:flex-end;gap:10px;padding-top:0;margin-top:-24px}
+ .ph-av{width:65px;height:65px;border-radius:50%;overflow:hidden;flex:0 0 auto;
+   border:3.5px solid var(--paper);background:#f7d074;display:block}
  .ph-av svg{width:100%;height:100%;display:block}
- .ph-idbody{display:flex;flex-direction:column;gap:1px;padding-bottom:3px;min-width:0}
- .ph-name{font-size:13px;font-weight:600;line-height:1.15}
- .ph-stats{font-size:9.5px;color:var(--ink3);line-height:1.2}
+ .ph-idbody{display:flex;flex-direction:column;gap:2px;padding-bottom:6px;min-width:0}
+ .ph-name{font-size:15.5px;font-weight:600;line-height:1.1;letter-spacing:-.01em}
+ .ph-stats{font-size:10px;color:var(--ink3);line-height:1.2}
  .ph-stats em{font-style:normal;font-weight:600;color:var(--ink2)}
- .ph-actions{display:flex;gap:6px;margin:9px 0 14px}
- .ph-actions span{flex:1;text-align:center;font-size:9.5px;font-weight:600;color:var(--ink2);
-   border:1px solid var(--line);border-radius:999px;padding:5px 0;background:var(--card)}
-
- .ph-top .wm{font-size:17px}
- .ph-day{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
- .wcard{margin-bottom:16px}
- .wtop{display:flex;align-items:center;gap:7px;margin-bottom:7px}
- .wdot{width:8px;height:8px;border-radius:3px;flex:none}
- .wname{font-size:12px;font-weight:600;flex:1}
- .wcount{font-family:'Space Grotesk',sans-serif;font-size:10.5px;color:var(--ink3)}
- @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+ .ph-actions{display:flex;gap:8px;margin:9px 0 12px}
+ .ph-actions span{flex:1;text-align:center;font-size:11px;font-weight:600;color:var(--ink);
+   border:1px solid var(--line);border-radius:999px;padding:7px 0;background:var(--card)}
+ .wcard{margin-bottom:9px}
+ .wtop{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+ .wdot{width:7px;height:7px;border-radius:2px;flex:0 0 auto}
+ .wname{font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:700;flex:1;
+   letter-spacing:-.01em}
+ .wcount{font-size:9.5px;color:var(--ink3)}
+ .wdots{font-size:11px;color:var(--ink3);letter-spacing:.5px;line-height:1}
+ /* The grid sits in its own bordered card, as it does in the app. */
+ .gcard{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:4px}
+ .wnote{font-size:8.5px;color:var(--ink3);margin:3px 2px 0}
+ .newwaffle{border:1.5px dashed var(--line);border-radius:999px;text-align:center;
+   font-size:11px;font-weight:600;color:var(--ink2);padding:8px 0;margin-top:2px}
+ .homebar{position:absolute;left:50%;bottom:7px;transform:translateX(-50%);
+   width:96px;height:4px;border-radius:999px;background:var(--ink);opacity:.22;z-index:3}
 
  /* ---------- grids + motion ---------- */
  .g{display:grid;gap:2px}
@@ -115,6 +130,12 @@
  .g.in i{opacity:1;transform:none}
  .g i.empty{background:#efeae2}
  .g i.live{background:var(--gold)}
+ .g i.next{background:transparent;border:1.4px dashed var(--gold)}
+ /* Scoped per waffle because the sprite rules below share specificity with
+    a bare `.g i.next` and come later, so the sprite was painting the open
+    slot too. */
+ .g.cof i.next,.g.sun i.next,.g.boul i.next{background-image:none}
+ .g i.empty{background:var(--pocketEmpty)}
 
  /* Real sunsets in the sunset waffle.
     Eighteen photographs in one 288x144 sprite, 6.1KB, one request. Positioned
@@ -584,54 +605,10 @@
       <span class="btn-side bs1"></span><span class="btn-side bs2"></span>
       <span class="btn-side bs3"></span><span class="btn-side bs4"></span>
       <div class="isl"></div><div class="gl"></div>
-      <div class="screen">
-        <div class="sb"><span>9:41</span><span class="sb-r">
+      <div class="screen"><div class="ph-cover"></div><div class="sb"><span>9:41</span><span class="sb-r">
  <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.5" height="6" rx="1"/><rect x="7.5" y="10" width="3.5" height="10" rx="1"/><rect x="13" y="6" width="3.5" height="14" rx="1"/><rect x="18.5" y="3" width="3.5" height="17" rx="1" opacity=".3"/></svg>
  <svg viewBox="0 0 26 24" fill="none"><rect x="2" y="8" width="18" height="10" rx="3" stroke="currentColor" stroke-width="1.4" opacity=".45"/><rect x="4" y="10" width="12" height="6" rx="1.5" fill="currentColor"/></svg>
-</span></div>
-        <div class="ph-top"><span class="wm">waffle<span class="dm"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></span><span class="ph-day">Thu 13 Aug</span></div>
-        <!-- The plate header. This phone was already showing a plate (your waffles
-       as grids) but jumped straight from the wordmark to the first one, with
-       no sign of whose plate it is. Cover, avatar, name and counts, matching
-       app/(app)/(tabs)/plate.tsx. The counts are the real sum of the three
-       grids below: 127 + 19 + 43. -->
-      <div class="ph-cover"></div>
-      <div class="ph-id">
-        <span class="ph-av">
-          <svg viewBox="30 34 120 120" aria-hidden="true">
-            <rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/>
-            <g fill="#efbe5b">
-              <rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/>
-              <rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/>
-              <rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/>
-            </g>
-            <rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/>
-            <circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/>
-            <path d="M81 138 Q90 146 99 138" stroke="#141210" stroke-width="3" stroke-linecap="round" fill="none"/>
-          </svg>
-        </span>
-        <span class="ph-idbody">
-          <b class="ph-name">Alfred</b>
-          <span class="ph-stats"><em>189</em> pockets &middot; <em>3</em> waffles</span>
-        </span>
-      </div>
-      <div class="ph-actions"><span>Add friends</span><span>Edit</span></div>
-      <div class="wcard">
-          <!-- Column counts come from densityCols() in src/lib/grid.ts: 10 under 120
-       pockets, 16 under 240, 20 under 300, 24 above. They were all 12 here,
-       which matched neither the app nor each other. -->
-      <div class="wtop"><span class="wdot" style="background:#b07f22"></span><span class="wname">Morning coffee</span><span class="wcount">118</span></div>
-          <div class="g cof" style="grid-template-columns:repeat(10,1fr)"><i style="background-color:#bfae95"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#bfae95"></i><i style="background-color:#bfae95"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#bfae95"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#b8a68d"></i><i style="background-color:#bfae95"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#bfae95"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#bfae95"></i><i style="background-color:#bfae95"></i></div>
-        </div>
-        <div class="wcard">
-          <div class="wtop"><span class="wdot" style="background:#c07a3c"></span><span class="wname">Sunset with Michelle</span><span class="wcount">19</span></div>
-          <div class="g sun" style="grid-template-columns:repeat(10,1fr)"><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#cbbda6"></i><i style="background-color:#b8a68d"></i><i style="background-color:#cbbda6"></i><i style="background-color:#cbbda6"></i><i style="background-color:#a89680"></i><i style="background-color:#c9b79c"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#c9b79c"></i><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#c2ad8f"></i><i class="live"></i></div>
-        </div>
-        <div class="wcard">
-          <div class="wtop"><span class="wdot" style="background:#7a8a4a"></span><span class="wname">Bouldering</span><span class="wcount">12</span></div>
-          <div class="g boul" style="grid-template-columns:repeat(10,1fr)"><i style="background-color:#c2ad8f"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#a89680"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#a89680"></i><i style="background-color:#a89680"></i></div>
-        </div>
-      </div>
+</span></div><div class="ph-top"><span class="wm">waffle<span class="dm"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></span><span class="ph-icons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span></div><div class="ph-sheet"><div class="ph-id"><span class="ph-av"><svg viewBox="30 34 120 120" aria-hidden="true"><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" stroke="#141210" stroke-width="3" stroke-linecap="round" fill="none"/></svg></span><span class="ph-idbody"><b class="ph-name">Alfred</b><span class="ph-stats"><em>47</em> pockets &#183; <em>3</em> waffles</span></span></div><div class="ph-actions"><span>Add friends</span><span>Edit</span></div><div class="wcard"><div class="wtop"><i class="wdot" style="background:#b07f22"></i><span class="wname">Morning coffee</span><span class="wcount">19 pockets</span><span class="wdots">&#183;&#183;&#183;</span></div><div class="gcard"><div class="g cof" style="grid-template-columns:repeat(10,1fr)"><i style="background-color:#bfae95"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#bfae95"></i><i style="background-color:#bfae95"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#bfae95"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#b8a68d"></i><i style="background-color:#bfae95"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#bfae95"></i><i style="background-color:#d2bfa2"></i><i style="background-color:#bfae95"></i><i class="next"></i></div></div><div class="wnote">Started 3 weeks ago &#183; pocket 20 is open</div></div><div class="wcard"><div class="wtop"><i class="wdot" style="background:#c07a3c"></i><span class="wname">Sunset with Michelle</span><span class="wcount">19 pockets</span><span class="wdots">&#183;&#183;&#183;</span></div><div class="gcard"><div class="g sun" style="grid-template-columns:repeat(10,1fr)"><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#cbbda6"></i><i style="background-color:#b8a68d"></i><i style="background-color:#cbbda6"></i><i style="background-color:#cbbda6"></i><i style="background-color:#a89680"></i><i style="background-color:#c9b79c"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#c9b79c"></i><i style="background-color:#a89680"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#c2ad8f"></i><i class="live"></i></div></div><div class="wnote">Started 3 weeks ago &#183; fed today</div></div><div class="wcard"><div class="wtop"><i class="wdot" style="background:#7a8a4a"></i><span class="wname">Bouldering</span><span class="wcount">9 pockets</span><span class="wdots">&#183;&#183;&#183;</span></div><div class="gcard"><div class="g boul" style="grid-template-columns:repeat(10,1fr)"><i style="background-color:#c2ad8f"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#cbbda6"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#d6c4a8"></i><i style="background-color:#e0d0b6"></i><i style="background-color:#a89680"></i><i style="background-color:#c2ad8f"></i><i style="background-color:#a89680"></i><i class="next"></i></div></div><div class="wnote">Started 9 days ago &#183; pocket 10 is open</div></div><div class="newwaffle">+ Start a waffle</div></div><div class="homebar"></div></div>
       <div class="homebar"></div>
     </div>
   </div>
