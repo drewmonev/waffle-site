@@ -145,8 +145,8 @@
 
 
  /* ---------- phones ----------
-    The layout already reflowed correctly here — flex-wrap and clamp() did
-    that work — and nothing overflows the viewport. What it did not do is
+    The layout already reflowed correctly here (flex-wrap and clamp() did
+    that work) and nothing overflows the viewport. What it did not do is
     change its mind about spacing: 78px between sections and an 86px header
     are desktop numbers, and on a 375px screen they turned the page into a
     very long scroll with a lot of nothing in it. This is a pass over the
@@ -183,8 +183,8 @@
  }
 
  /* ---------- small phones ----------
-    The mock phone is a fixed 296px. At 375 that is comfortable; at 320 —
-    an SE, or anything narrower — 296 plus padding is wider than the screen,
+    The mock phone is a fixed 296px. At 375 that is comfortable; at 320
+    (an SE, or anything narrower) 296 plus padding is wider than the screen,
     which is exactly the overflow the rest of the page avoids. Scaled rather
     than reflowed, because everything inside is positioned against that 296. */
  @media (max-width:380px){
@@ -198,10 +198,10 @@
     tilts out of the way as it scrolls into view and he leans out from under
     its left edge to wave. Same drawing as desktop, scaled to the space.
 
-    The tilt goes on .iphone and replaces the idle float — they are both
+    The tilt goes on .iphone and replaces the idle float: they are both
     transforms, and an animation would win over the transition. */
  @media (max-width:700px){
-   /* At rest the phone is centred and upright — the shift right is part of
+   /* At rest the phone is centred and upright. The shift right is part of
       the reveal, not a standing offset. It slides over as it tilts, which is
       what opens the wedge on the left for Alfred to lean into. At 375 there
       is only ~19px between the stage edge and the phone otherwise, which is
@@ -223,7 +223,7 @@
      opacity:var(--p,0);
      transform:rotate(calc(-15deg + var(--p,0) * 8deg))
                translateX(calc(64px - var(--p,0) * 64px))}
-   /* Waves only once he is actually out — see the .waving class. */
+   /* Waves only once he is actually out. See the .waving class. */
    .stage.waving .alf-peek .wavearm{animation:wave 2.4s ease-in-out infinite}
  }
  @media (max-width:380px){
@@ -343,11 +343,11 @@
  .signup button:hover{transform:translateX(2px)}
  .signup input:placeholder-shown + button{background:#d6d0c6;color:#fff}
  /* The old rule set display:none on .ok unconditionally, which beats the
-    browser's own [hidden]{display:none} — so `ok.hidden = false` could never
+    browser's own [hidden]{display:none}, so `ok.hidden = false` could never
     reveal it and the success message never appeared. State now lives in one
     class on the FORM, so nothing has to out-specify a UA default. */
  /* The old rule set display:none on .ok unconditionally, which beats the
-    browser's own [hidden]{display:none} — so `ok.hidden = false` could never
+    browser's own [hidden]{display:none}, so `ok.hidden = false` could never
     reveal it. State lives in one class on the FORM now, so nothing has to
     out-specify a UA default. */
  .signup .ok{display:none;align-items:baseline;gap:8px;margin-top:16px;
@@ -364,7 +364,7 @@
  @keyframes tickpop{0%{transform:scale(.2) rotate(-25deg);opacity:0}
    60%{transform:scale(1.18) rotate(4deg);opacity:1}100%{transform:none;opacity:1}}
 
- /* Confetti, reusing the piece idiom from the milestone card above — and the
+ /* Confetti, reusing the piece idiom from the milestone card above, and the
     same palette as src/components/confetti.tsx, so it is one object across the
     app and the site. One shot: a loop would be irritating on a page people
     linger on. Pieces are inert until .sent lands, which is what makes this a
@@ -502,7 +502,7 @@
     <div class="step rev"><svg class="" viewBox="-14 0 208 190" aria-hidden="true"><path d="M32 114 C11 116 5 130 13 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 114 C169 116 175 130 167 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg><div class="n">01</div><h3>Pick a waffle</h3>
       <p>Something you actually see every day. Your coffee. The sky at 6pm. Your dog.</p></div>
     <div class="step rev d1"><svg class="" viewBox="-14 0 208 190" aria-hidden="true"><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/><path d="M32 114 C44 113 52 105 58 97" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 114 C136 113 128 105 122 97" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="66" y="61" width="16" height="9" rx="2.5" fill="#141210"/><circle cx="113" cy="64" r="4.5" fill="#d9a441"/><rect x="57" y="69" width="66" height="45" rx="9" fill="#141210"/><circle cx="90" cy="91" r="14" fill="none" stroke="#fbfaf8" stroke-width="3"/><circle cx="90" cy="91" r="6.5" fill="#fbfaf8" opacity=".92"/><rect x="103" y="76" width="9" height="6" rx="2" fill="#57524b"/></svg><div class="n">02</div><h3>Feed it a photo</h3>
-      <p>Taken live, in the app. No camera roll, no old photos. One a day &#8212; that&#8217;s what keeps it honest.</p></div>
+      <p>Taken live, in the app. No camera roll, no old photos. One a day. That&#8217;s what keeps it honest.</p></div>
     <div class="step rev d2"><svg class="" viewBox="-14 0 208 190" aria-hidden="true"><path d="M32 110 C16 104 10 88 16 74" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 110 C164 104 170 88 164 74" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg><div class="n">03</div><h3>It sets into a pocket</h3>
       <p>Your photo lives in the feed for 24 hours, then shrinks into one square of your waffle. Forever.</p></div>
   </div>
@@ -512,7 +512,7 @@
   <div>
     <div class="eyebrow rev">The waffle</div>
     <h2 class="rev">A hundred days, in one picture.</h2>
-    <p class="sub rev d1">Every pocket is a day you showed up. Miss one and nothing bad happens &#8212; the waffle just doesn&#8217;t grow. There&#8217;s no streak to break and no one to apologise to.</p>
+    <p class="sub rev d1">Every pocket is a day you showed up. Miss one and nothing bad happens. The waffle just doesn&#8217;t grow. There&#8217;s no streak to break and no one to apologise to.</p>
     <p class="gridnote rev d2" style="text-align:left;margin-top:18px">Hover any pocket to see it.</p>
     
   </div>
@@ -593,8 +593,8 @@
     <div class="fq rev"><b>What if I miss a day?</b><span>Nothing. Your waffle just doesn&#8217;t grow that day. No guilt screen, no broken streak.</span></div>
     <div class="fq rev"><b>Can I post an old photo?</b><span>No. The camera opens live and that&#8217;s the only way in. It&#8217;s the point.</span></div>
     <div class="fq rev"><b>How many waffles can I have?</b><span>One on the free tier, which is the number the app is really built around. Plus lifts it if you genuinely have two or three things you do every day.</span></div>
-    <div class="fq rev"><b>Who can see my photos?</b><span>Only friends you&#8217;ve added. There is no explore page and no public profile. Someone who knows your handle can search for it &#8212; that is how friends add each other &#8212; but nothing you post is visible to them until you accept.</span></div>
-    <div class="fq rev"><b>Does it cost anything?</b><span>Free gets you one waffle and one photo a day, for ever. Waffle plus is $3 a month if you want to keep several going at once. It never touches anything you have already filled &#8212; every pocket you made stays yours, paid or not.</span></div>
+    <div class="fq rev"><b>Who can see my photos?</b><span>Only friends you&#8217;ve added. There is no explore page and no public profile. Someone who knows your handle can search for it, which is how friends add each other, but nothing you post is visible to them until you accept.</span></div>
+    <div class="fq rev"><b>Does it cost anything?</b><span>Free gets you one waffle and one photo a day, for ever. Waffle plus is $3 a month if you want to keep several going at once. It never touches anything you have already filled. Every pocket you made stays yours, paid or not.</span></div>
     <div class="fq rev"><b>When can I get it?</b><span>Soon. Leave your email and you&#8217;ll hear the day it lands.</span></div>
   </div>
 </div></section>
@@ -672,7 +672,7 @@
 
     // Confirming means showing them what we heard. Echoing the address back is
     // the difference between "something happened" and "you specifically are on
-    // the list" — and it catches a typo while they can still see it.
+    // the list". It also catches a typo while they can still see it.
     function confirmed(email) {
       if (mail) mail.textContent = email;   // textContent, never innerHTML
       clearFail();
@@ -705,7 +705,7 @@
         .then(function (r) {
           // 409 is the unique index: they are already on the list, which from
           // where they are standing is a success, not an error. Deliberately
-          // identical wording — a different message would tell any visitor
+          // identical wording: a different message would tell any visitor
           // whether a given address is on the list.
           if (r.ok || r.status === 409) { confirmed(email); return; }
           throw new Error(String(r.status));
@@ -731,7 +731,7 @@
     // Only the phone layout runs this; above 700px the CSS ignores --p.
     // Measured against how far the page has been scrolled, NOT where the
     // stage sits in the viewport. On a phone the stage is already on screen
-    // at rest, so a viewport-relative range starts around 0.77 — the phone
+    // at rest, so a viewport-relative range starts around 0.77. The phone
     // would load pre-tilted with Alfred half out. This way the first paint
     // is always a phone standing straight up with nobody beside it, and he
     // arrives because you scrolled.
