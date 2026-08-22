@@ -207,9 +207,10 @@
       is only ~19px between the stage edge and the phone otherwise, which is
       why he had nowhere to go but underneath it. */
    .stage{position:relative;margin-left:auto;margin-right:auto}
-   /* Driven by --p (0 at the bottom of the viewport, 1 once it is properly
-      in view), set on .stage by the scroll handler. No transition: the
-      scroll position IS the timeline, so easing it would fight the finger. */
+   /* Driven by --p (0 at rest, 1 once he is fully out), set on .stage by the
+      scroll handler. Still no CSS transition here: the scroll position is the
+      timeline, and a transition would fight the finger. The smoothing lives
+      in the handler instead, which eases the VALUE rather than the style. */
    .iphone{animation:none;
      transform:translateX(calc(var(--p,0) * 84px)) rotate(calc(var(--p,0) * 13deg))}
 
@@ -725,32 +726,71 @@
   if (!stage) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var ticking = false;
-  function frame() {
-    ticking = false;
-    // Only the phone layout runs this; above 700px the CSS ignores --p.
-    // Measured against how far the page has been scrolled, NOT where the
-    // stage sits in the viewport. On a phone the stage is already on screen
-    // at rest, so a viewport-relative range starts around 0.77. The phone
-    // would load pre-tilted with Alfred half out. This way the first paint
-    // is always a phone standing straight up with nobody beside it, and he
-    // arrives because you scrolled.
+  // Only the phone layout runs this; above 700px the CSS ignores --p.
+  // Measured against how far the page has been scrolled, NOT where the stage
+  // sits in the viewport. On a phone the stage is already on screen at rest,
+  // so a viewport-relative range starts around 0.77 and the phone would load
+  // pre-tilted with Alfred half out. This way the first paint is always a
+  // phone standing straight up with nobody beside it, and he arrives because
+  // you scrolled.
+  // ---- the three numbers worth touching ----
+  var FROM = 20;    // scroll px before anything moves
+  var TO   = 400;   // scroll px by which he is fully out. Longer = gentler.
+  var EASE = 0.18;  // how hard it chases your thumb, per frame.
+                    // Higher is snappier and closer to the old behaviour;
+                    // lower is heavier and floatier. 1 would disable the
+                    // smoothing entirely.
+
+  var target = 0;   // where the scroll position says we should be
+  var shown = 0;    // where we actually are
+  var raf = null;
+  var waving = false;
+
+  function readScroll() {
     var y = window.pageYOffset || document.documentElement.scrollTop;
-    var from = 20;
-    var to = 320;
-    var p = (y - from) / (to - from);
-    p = p < 0 ? 0 : p > 1 ? 1 : p;
-    stage.style.setProperty('--p', p.toFixed(3));
-    stage.classList.toggle('waving', p > 0.55);
+    var p = (y - FROM) / (TO - FROM);
+    return p < 0 ? 0 : p > 1 ? 1 : p;
   }
+
+  function paint(p) {
+    // Smoothstep. A raw linear ramp starts and stops dead at the ends of the
+    // range, which is the part that read as a jerk at the top and bottom of
+    // the travel. This eases both ends and leaves the middle alone.
+    var e = p * p * (3 - 2 * p);
+    stage.style.setProperty('--p', e.toFixed(4));
+    var w = e > 0.55;
+    if (w !== waving) { waving = w; stage.classList.toggle('waving', w); }
+  }
+
+  function tick() {
+    // Ease toward the target instead of snapping to it. Still no CSS
+    // transition: the scroll position is the timeline, and a transition would
+    // genuinely fight the finger. This is different, it smooths the INPUT.
+    // Scroll events arrive in coarse bursts during momentum scrolling, so
+    // tracking them frame-for-frame is what made this judder. Trailing by two
+    // or three frames reads as weight, not lag.
+    shown += (target - shown) * EASE;
+    if (Math.abs(target - shown) < 0.0008) {
+      shown = target;
+      raf = null;
+    } else {
+      raf = requestAnimationFrame(tick);
+    }
+    paint(shown);
+  }
+
   function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(frame);
+    target = readScroll();
+    if (raf === null) raf = requestAnimationFrame(tick);
   }
+
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
-  frame();
+
+  // First paint snaps rather than animating: reloading half way down the page
+  // should not play the whole reveal at you.
+  target = shown = readScroll();
+  paint(shown);
 })();
 </script>
 </body></html>
