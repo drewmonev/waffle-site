@@ -78,9 +78,16 @@
 
  /* ---------- the plate header inside the phone ---------- */
  /* The cover breaks the screen's 14px padding, the way it does in the app. */
- .ph-cover{margin:0 -14px;height:60px;border-radius:0 0 16px 16px;
+ /* Pinned to the top of the screen rather than sitting below the wordmark,
+    so the yellow runs from the very top. The screen's own overflow:hidden and
+    38px radius clip the top corners, so only the bottom two are rounded here.
+    Everything else in the screen is lifted above it. */
+ .ph-cover{position:absolute;top:0;left:0;right:0;height:138px;
+   border-radius:0 0 16px 16px;z-index:0;
    background:linear-gradient(135deg,#fdf3df,#f6e7c8)}
- .ph-id{display:flex;align-items:flex-end;gap:8px;margin:-20px 0 0}
+ .screen > .sb,.screen > .ph-top,.screen > .ph-id,
+ .screen > .ph-actions,.screen > .wcard{position:relative;z-index:1}
+ .ph-id{display:flex;align-items:flex-end;gap:8px;margin:22px 0 0}
  .ph-av{width:46px;height:46px;border-radius:50%;overflow:hidden;flex:0 0 auto;
    border:3px solid var(--paper);background:#f7d074;display:block}
  .ph-av svg{width:100%;height:100%;display:block}
@@ -575,7 +582,7 @@
         </div>
         <div class="wcard">
           <div class="wtop"><span class="wdot" style="background:#7a8a4a"></span><span class="wname">Bouldering</span><span class="wcount">43</span></div>
-          <div class="g" style="grid-template-columns:repeat(10,1fr)"><i style="background:#c2ad8f"></i><i style="background:#d6c4a8"></i><i style="background:#cbbda6"></i><i style="background:#d6c4a8"></i><i style="background:#d6c4a8"></i><i style="background:#e0d0b6"></i><i style="background:#a89680"></i><i style="background:#c2ad8f"></i><i style="background:#a89680"></i><i style="background:#a89680"></i><i style="background:#d6c4a8"></i><i style="background:#d2bfa2"></i><i style="background:#a89680"></i><i style="background:#cbbda6"></i><i style="background:#bfae95"></i><i style="background:#c2ad8f"></i><i style="background:#b8a68d"></i><i style="background:#cbbda6"></i><i style="background:#c9b79c"></i><i style="background:#b8a68d"></i><i style="background:#b8a68d"></i><i style="background:#c9b79c"></i><i style="background:#d2bfa2"></i><i style="background:#e0d0b6"></i><i style="background:#a89680"></i><i style="background:#cbbda6"></i><i style="background:#e0d0b6"></i><i style="background:#cbbda6"></i><i style="background:#c2ad8f"></i><i style="background:#bfae95"></i><i style="background:#e0d0b6"></i><i style="background:#d2bfa2"></i><i style="background:#d6c4a8"></i><i style="background:#b8a68d"></i><i style="background:#d6c4a8"></i><i style="background:#a89680"></i></div>
+          <div class="g" style="grid-template-columns:repeat(10,1fr)"><i style="background:#c2ad8f"></i><i style="background:#d6c4a8"></i><i style="background:#cbbda6"></i><i style="background:#d6c4a8"></i><i style="background:#d6c4a8"></i><i style="background:#e0d0b6"></i><i style="background:#a89680"></i><i style="background:#c2ad8f"></i><i style="background:#a89680"></i><i style="background:#a89680"></i><i style="background:#d6c4a8"></i><i style="background:#d2bfa2"></i><i style="background:#a89680"></i><i style="background:#cbbda6"></i><i style="background:#bfae95"></i><i style="background:#c2ad8f"></i><i style="background:#b8a68d"></i><i style="background:#cbbda6"></i><i style="background:#c9b79c"></i><i style="background:#b8a68d"></i><i style="background:#b8a68d"></i><i style="background:#c9b79c"></i><i style="background:#d2bfa2"></i><i style="background:#e0d0b6"></i><i style="background:#a89680"></i><i style="background:#cbbda6"></i><i style="background:#e0d0b6"></i><i style="background:#cbbda6"></i><i style="background:#c2ad8f"></i><i style="background:#bfae95"></i></div>
         </div>
       </div>
       <div class="homebar"></div>
