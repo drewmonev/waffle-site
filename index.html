@@ -546,7 +546,10 @@
     for the no-image case, which is why it hides once an <img> lands. */
  .shot-sunset::after{content:'';position:absolute;left:36%;bottom:26%;width:24%;aspect-ratio:1;
    border-radius:50%;background:#ffd9a0;box-shadow:0 0 40px 16px rgba(255,190,120,.45)}
- .shot-sunset:has(img)::after{display:none}
+ /* Every drawn stand-in retires once its card holds a real photograph,
+    rather than being deleted, so the no-image case still renders. */
+ .shot-sunset:has(img)::after,.shot-crag:has(img)::after,
+ .shot-coffee:has(img)::after{display:none}
  .shot-crag{background:linear-gradient(160deg,#8a8f7a,#6b7060 35%,#4a4f42 70%,#2f342a)}
  .shot-crag::after{content:'';position:absolute;left:20%;top:44%;width:13%;aspect-ratio:1;
    border-radius:50%;background:#d9a441}
@@ -690,7 +693,13 @@
         <span class="p-who"><b>andrew</b><i>@andrew</i></span>
         <span class="p-ago">5h</span>
       </div>
-      <div class="p-shot shot-crag"></div>
+      <div class="p-shot shot-crag">
+        <picture>
+          <source srcset="img/crag.webp" type="image/webp">
+          <img src="img/crag.jpg" width="600" height="600" loading="lazy" decoding="async"
+               alt="A bouldering gym: coloured holds on a grey wall under wooden roof beams.">
+        </picture>
+      </div>
       <div class="p-foot">
         <span class="p-waffle"><i style="background:#7a8a4a"></i>Bouldering<em>pocket 44</em></span>
         <span class="p-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.8 6.6a5 5 0 0 0-7.1 0L12 8.3l-1.7-1.7a5 5 0 1 0-7.1 7.1l8.8 8.8 8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>7</span>
@@ -702,7 +711,13 @@
         <span class="p-who"><b>kenny</b><i>@kenny</i></span>
         <span class="p-ago">8h</span>
       </div>
-      <div class="p-shot shot-coffee"></div>
+      <div class="p-shot shot-coffee">
+        <picture>
+          <source srcset="img/coffee.webp" type="image/webp">
+          <img src="img/coffee.jpg" width="600" height="600" loading="lazy" decoding="async"
+               alt="A latte seen from above, leaf poured into the foam.">
+        </picture>
+      </div>
       <div class="p-foot">
         <span class="p-waffle"><i style="background:#b07f22"></i>Morning coffee<em>pocket 203</em></span>
         <span class="p-like liked"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.8 6.6a5 5 0 0 0-7.1 0L12 8.3l-1.7-1.7a5 5 0 1 0-7.1 7.1l8.8 8.8 8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>9</span>
