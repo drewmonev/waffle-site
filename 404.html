@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nothing here · Waffle</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<meta name="theme-color" content="#fbfaf8">
+<!-- A 404 should never end up in an index. No canonical either: this page
+     stands in for many addresses and is the canonical version of none. -->
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="There is no page at this address.">
+<meta property="og:title" content="Nothing here · Waffle">
+<meta property="og:description" content="There is no page at this address.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+ :root{--ink:#141210;--ink2:#57524b;--ink3:#8a8378;--paper:#fbfaf8;--card:#fff;--line:#e9e5df;
+   --gold:#d9a441;--gold2:#b07f22}
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink);
+   -webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden;
+   display:flex;flex-direction:column;min-height:100vh}
+ .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+ .wm{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em;
+   display:inline-flex;align-items:flex-end;gap:.18em;line-height:1}
+ .dm{display:grid;grid-template-columns:repeat(3,.14em);grid-template-rows:repeat(3,.14em);
+   gap:.07em;margin-bottom:.14em}
+ .dm span{background:currentColor;border-radius:1px}
+ .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+
+ nav{position:sticky;top:0;z-index:40;background:rgba(251,250,248,.92);
+   backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+ nav .wm{font-size:20px}
+ .back{font-size:14px;color:var(--ink2);text-decoration:none}
+ .back:hover{color:var(--ink)}
+
+ /* flex:1 so the footer sits at the bottom of a short page rather than
+    floating halfway up a tall screen. */
+ main{flex:1;display:flex;align-items:center;justify-content:center;
+   padding:60px 26px 72px}
+ .col{width:100%;max-width:560px;text-align:center}
+
+ .alf{width:96px;height:auto;display:block;margin:0 auto 26px}
+
+ .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);
+   margin-bottom:12px}
+ h1{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.02em;
+   font-size:clamp(32px,5.5vw,46px);line-height:1.05}
+ .lede{margin-top:18px;font-size:16.5px;line-height:1.6;color:var(--ink2)}
+
+ /* The card is the joke: the address you asked for, drawn as a waffle that was
+    never started. Same white-card idiom as the .tldr box on /privacy. */
+ .card{margin:34px 0 30px;background:var(--card);border:1px solid var(--line);
+   border-radius:18px;padding:18px 20px 16px;text-align:left}
+ .ctop{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+ .cdot{flex:0 0 auto;width:9px;height:9px;border-radius:99px;background:var(--ink3)}
+ .cname{font-size:14.5px;font-weight:600;color:var(--ink);
+   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+ .ccount{margin-left:auto;flex:0 0 auto;font-size:12.5px;color:var(--ink3);
+   font-variant-numeric:tabular-nums}
+
+ .g{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+ .g i{aspect-ratio:1;border-radius:3px;display:block}
+ .g i.empty{background:#efeae2}
+ /* The one open pocket, drawn exactly as the app draws it. */
+ .g i.next{background:transparent;border:1.4px dashed var(--gold)}
+
+ .cnote{margin-top:12px;font-size:12.5px;color:var(--ink3)}
+
+ .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+ .btn{font:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border:none;
+   border-radius:99px;padding:11px 20px;cursor:pointer;text-decoration:none;display:inline-block;
+   transition:transform .18s ease}
+ .btn:hover{transform:translateY(-2px)}
+ .btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--line)}
+
+ footer{border-top:1px solid var(--line);padding:40px 0 60px;font-size:13px;color:var(--ink3)}
+ footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+ footer a{color:var(--ink2);text-decoration:none;margin-left:18px}
+ footer a:hover{color:var(--ink)}
+
+ @media(max-width:640px){
+   nav .wrap{height:56px} nav .wm{font-size:20px}
+   main{padding:40px 22px 56px}
+   .btn{padding:10px 16px;font-size:13.5px}
+   .alf{width:82px;margin-bottom:22px}
+   /* 12 columns of 2px-gapped squares get unreadably small on a phone. */
+   .g{grid-template-columns:repeat(8,1fr)}
+   footer .wrap{flex-direction:column;align-items:flex-start}
+   footer a{margin:0 18px 0 0}
+ }
+ @media(prefers-reduced-motion:reduce){ .btn{transition:none} .btn:hover{transform:none} }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="/"><span class="wm">waffle<span class="dm"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></span></a>
+  <a class="back" href="/">&larr; Back to waffle</a>
+</div></nav>
+
+<main>
+ <div class="col">
+
+  <!-- Alfred, put out. The one place on the site where he is not cheerful.
+       Worth saying why, because "Alfred is never sad" is close to a rule: that
+       rule is about a MISSED DAY. That is the anti-streak promise, where a sad
+       mascot would be guilt by another name. A wrong URL is not a missed day and is
+       not the visitor's failing, so the copy carries the reassurance ("nothing
+       is broken on your end") while Alfred is simply disappointed there was
+       nothing here. Do not reuse this face anywhere a run or a day is involved.
+
+       Three changes from the standard face, all from the reference:
+         * arms hang limp instead of reaching up, which does as much work as the face
+         * brows slant with the INNER ends raised. alf-huh on the landing page
+           slants them the other way, which reads furrowed rather than sad
+         * the mouth is alf-huh's squiggle, turned down -->
+  <svg class="alf" viewBox="-14 0 208 190" aria-hidden="true"><path d="M32 112 C15 122 10 138 18 152" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 112 C165 122 170 138 162 152" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><path d="M55 127 L73 120" stroke="#141210" stroke-width="3.4" stroke-linecap="round" fill="none"/><path d="M107 120 L125 127" stroke="#141210" stroke-width="3.4" stroke-linecap="round" fill="none"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M79 145 Q85 139 91 142 Q97 145 102 141" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg>
+
+  <p class="eyebrow">Error 404</p>
+  <h1>This pocket is empty.</h1>
+  <p class="lede">There&#8217;s no page at this address. It may have moved, or it may never
+    have been here. Either way, nothing is broken on your end.</p>
+
+  <div class="card">
+    <div class="ctop">
+      <i class="cdot"></i>
+      <span class="cname" id="asked">The page you asked for</span>
+      <span class="ccount">0 pockets</span>
+    </div>
+    <div class="g" aria-hidden="true">
+      <i class="next"></i><i class="empty"></i><i class="empty"></i><i class="empty"></i>
+      <i class="empty"></i><i class="empty"></i><i class="empty"></i><i class="empty"></i>
+      <i class="empty"></i><i class="empty"></i><i class="empty"></i><i class="empty"></i>
+      <i class="empty"></i><i class="empty"></i><i class="empty"></i><i class="empty"></i>
+      <i class="empty"></i><i class="empty"></i><i class="empty"></i><i class="empty"></i>
+      <i class="empty"></i><i class="empty"></i><i class="empty"></i><i class="empty"></i>
+    </div>
+    <p class="cnote">Never started &#183; pocket 1 is open</p>
+  </div>
+
+  <div class="cta">
+    <a class="btn" href="/">Back to waffle</a>
+    <a class="btn ghost" href="/#how">How it works</a>
+  </div>
+
+ </div>
+</main>
+
+<footer><div class="wrap">
+  <span>waffle, made by Batter &middot; feedwaffle.com &middot; San Jose, California</span>
+  <span>
+    <a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a>
+    <a href="mailto:andrewbaobui@gmail.com">Contact</a>
+  </span>
+</div></footer>
+
+<script>
+// Name the card after the address that missed, so the page is about THIS
+// mistake rather than a generic one. Progressive enhancement: the markup ships
+// with a sensible label already, so with JS off nothing looks broken.
+//
+// textContent, never innerHTML. The path is attacker-controlled by definition
+// (anyone can put anything after the slash), and writing it as markup would
+// turn this page into reflected XSS on every 404.
+(function () {
+  try {
+    var path = window.location.pathname || '';
+    if (path === '/' || path === '') return;
+    if (path.length > 42) path = path.slice(0, 41) + '…';
+    document.getElementById('asked').textContent = path;
+  } catch (e) { /* leave the fallback label in place */ }
+})();
+</script>
+
+</body></html>
