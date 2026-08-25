@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "KZB3KU34N5.com.batter.waffle",
+        "paths": [ "/add/*" ]
+      }
+    ]
+  }
+}
