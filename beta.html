@@ -13,154 +13,233 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+ /* Tokens, nav, type scale and reveal all lifted from index.html rather than
+    re-chosen, so this page is the same site rather than a page that resembles
+    it. Anything changed here should be changed there too. */
  :root{--ink:#141210;--ink2:#57524b;--ink3:#8a8378;--paper:#fbfaf8;--card:#fff;--line:#e9e5df;
    --gold:#d9a441;--gold2:#b07f22}
  *{margin:0;padding:0;box-sizing:border-box}
+ html{scroll-behavior:smooth}
  body{font-family:Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink);
-   -webkit-font-smoothing:antialiased;line-height:1.5;padding:34px 22px 70px}
- .wrap{max-width:520px;margin:0 auto}
+   -webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+ .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
  .wm{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em;
-   display:inline-flex;align-items:flex-end;gap:.18em;line-height:1;font-size:26px}
+   display:inline-flex;align-items:flex-end;gap:.18em;line-height:1;font-size:20px}
  .dm{display:grid;grid-template-columns:repeat(3,.14em);grid-template-rows:repeat(3,.14em);
    gap:.07em;margin-bottom:.14em}
  .dm span{background:currentColor;border-radius:1px}
- h1{font-family:'Space Grotesk',sans-serif;font-size:29px;letter-spacing:-.02em;margin:24px 0 12px;
-   line-height:1.15}
- .lede{color:var(--ink2);font-size:16px}
- .lede b{color:var(--ink);font-weight:600}
- h2{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3);
-   margin:38px 0 14px}
- ol{list-style:none;counter-reset:s}
- ol li{counter-increment:s;position:relative;padding-left:42px;margin-bottom:20px}
- ol li:before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;
-   border-radius:50%;background:var(--gold);color:#fff;font-weight:600;font-size:14px;
-   display:flex;align-items:center;justify-content:center}
- ol li b{display:block;font-weight:600;margin-bottom:3px}
- ol li span{color:var(--ink2);font-size:15px}
- a{color:var(--gold2);font-weight:500}
- .note{margin-top:12px;padding:15px 17px;background:var(--card);border:1px solid var(--line);
-   border-radius:14px;font-size:14.5px;color:var(--ink2);line-height:1.55}
- .note b{color:var(--ink);font-weight:600}
- ul.plain{list-style:none;margin-top:4px}
- ul.plain li{color:var(--ink2);font-size:15px;padding-left:16px;position:relative;margin-bottom:9px}
+ nav{position:sticky;top:0;z-index:30;background:rgba(251,250,248,.86);backdrop-filter:blur(10px);
+   border-bottom:1px solid var(--line)}
+ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+ .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+ .navlinks{display:flex;gap:26px;margin-left:auto;margin-right:20px}
+ .navlinks a{font-size:14px;color:var(--ink2);text-decoration:none}
+ .navlinks a:hover{color:var(--ink)}
+ .btn{font:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border:none;
+   border-radius:99px;padding:11px 20px;cursor:pointer;text-decoration:none;display:inline-block;
+   transition:transform .18s ease}
+ .btn:hover{transform:translateY(-2px)}
+ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(38px,5.6vw,60px);font-weight:700;
+   letter-spacing:-.04em;line-height:1.02;margin-bottom:18px}
+ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,3.4vw,36px);font-weight:700;
+   letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+ .sub{font-size:16.5px;color:var(--ink2);max-width:560px}
+ .sub b{color:var(--ink);font-weight:600}
+ .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+ .rev{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.3,1)}
+ .rev.in{opacity:1;transform:none}
+ .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+ .hero{padding:72px 0 10px}
+ .sec{padding:56px 0;border-top:1px solid var(--line);margin-top:56px}
+ .sec:first-of-type{border-top:0;margin-top:0}
+ /* Steps as cards, the same shape index.html uses for its three-up row. */
+ .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:16px;margin-top:26px}
+ .step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 22px;
+   transition:transform .3s ease,box-shadow .3s ease}
+ .step:hover{transform:translateY(-4px);box-shadow:0 16px 34px -20px rgba(20,18,16,.4)}
+ .num{width:30px;height:30px;border-radius:50%;background:var(--gold);color:#fff;font-weight:600;
+   font-size:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+ .step b{display:block;font-weight:600;font-size:16px;margin-bottom:5px}
+ .step span{color:var(--ink2);font-size:14.5px;line-height:1.55}
+ .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+ @media(max-width:760px){.cols{grid-template-columns:1fr}}
+ .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 22px}
+ .panel h3{font-size:15px;font-weight:600;margin-bottom:12px}
+ ul.plain{list-style:none}
+ ul.plain li{color:var(--ink2);font-size:14.5px;padding-left:17px;position:relative;margin-bottom:10px;
+   line-height:1.55}
+ ul.plain li:last-child{margin-bottom:0}
  ul.plain li:before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;
    border-radius:2px;background:var(--line)}
  ul.plain li b{color:var(--ink);font-weight:600}
- form.signup{display:flex;gap:8px;margin-top:6px}
- form.signup input{flex:1;min-width:0;font:inherit;font-size:16px;padding:13px 15px;
-   border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+ form.signup{display:flex;gap:9px;margin-top:26px;max-width:520px}
+ form.signup input{flex:1;min-width:0;font:inherit;font-size:16px;padding:14px 16px;
+   border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--ink)}
  form.signup input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
- form.signup button{font:inherit;font-weight:600;font-size:15px;padding:13px 20px;border:0;
-   border-radius:12px;background:var(--ink);color:var(--paper);cursor:pointer}
- form.signup button:disabled{opacity:.5;cursor:default}
+ form.signup button{white-space:nowrap}
  form.signup.sent{display:none}
- .msg{color:#c0392b;font-size:13.5px;margin-top:8px;min-height:1px}
- .done{display:none;margin-top:6px;padding:15px 17px;background:var(--card);
-   border:1px solid var(--line);border-radius:14px;font-size:15px}
- .done b{font-weight:600}
- form.signup.sent + .msg + .done{display:block}
- .qr{display:flex;gap:18px;align-items:center;margin-top:6px;padding:16px;
-   background:var(--card);border:1px solid var(--line);border-radius:16px}
- .qr img{width:118px;height:118px;flex:0 0 auto;border-radius:8px;background:#fff;padding:6px}
- .qr p{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.5}
- .qr p b{color:var(--ink);font-weight:600;display:block;margin-bottom:3px}
- @media(max-width:430px){.qr{flex-direction:column;text-align:center}}
- footer{margin-top:46px;padding-top:20px;border-top:1px solid var(--line);
-   font-size:13px;color:var(--ink3)}
- footer a{color:var(--ink2);text-decoration:none;margin-right:14px}
- @media (prefers-color-scheme:dark){
-   :root{--ink:#f4efe6;--ink2:#b3aa9c;--ink3:#8a8378;--paper:#17140f;--card:#211d17;--line:#332c23;
-     --gold:#d9a441;--gold2:#e0b45f}
+ .msg{color:#c0392b;font-size:13.5px;margin-top:9px;min-height:1px}
+ .done{display:none;margin-top:26px;max-width:520px;padding:18px 20px;background:var(--card);
+   border:1px solid var(--line);border-radius:18px;font-size:15.5px;color:var(--ink2)}
+ .done b{color:var(--ink);font-weight:600}
+ form.signup.sent ~ .done{display:block}
+ .qr{display:flex;gap:22px;align-items:center;margin-top:26px;padding:22px;
+   background:var(--card);border:1px solid var(--line);border-radius:18px;max-width:520px}
+ .qr img{width:128px;height:128px;flex:0 0 auto;border-radius:10px;background:#fff;padding:7px}
+ .qr p{font-size:14.5px;color:var(--ink2);line-height:1.55}
+ .qr p b{color:var(--ink);font-weight:600;display:block;margin-bottom:4px}
+ @media(max-width:520px){.qr{flex-direction:column;text-align:center}}
+ footer{border-top:1px solid var(--line);padding:40px 0 60px;font-size:13px;color:var(--ink3);
+   margin-top:56px}
+ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+ footer a{color:var(--ink2);text-decoration:none;margin-left:18px}
+ footer a:hover{color:var(--ink)}
+ @media(max-width:640px){footer .wrap{flex-direction:column;align-items:flex-start}
+   footer a{margin:0 18px 0 0}}
+ /* Same breakpoints index.html uses, so the two navs behave identically. */
+ @media (max-width:940px){.navlinks{display:none}}
+ @media (max-width:700px){
+   .wrap{padding:0 20px}
+   nav .wrap{height:56px}
+   nav .wm{font-size:20px}
+   .btn{padding:10px 16px;font-size:13.5px}
+   .hero{padding:44px 0 8px}
+   .sec{padding:44px 0;margin-top:44px}
+   .sub{font-size:16px}
+   /* Stack the field above the button: side by side leaves the input too narrow
+      to read back what somebody typed, which is the one thing it has to do. */
+   form.signup{flex-direction:column;gap:10px}
+   form.signup button{width:100%}
  }
+ @media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}
+   .btn:hover,.step:hover{transform:none}}
 </style></head>
-<body><div class="wrap">
+<body>
 
-<span class="wm">waffle<span class="dm"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></span>
+<nav><div class="wrap">
+  <a class="brand" href="/"><span class="wm">waffle<span class="dm"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></span></a>
+  <div class="navlinks">
+    <a href="/">What Waffle is</a>
+    <a href="#steps">Getting in</a>
+    <a href="#know">Before you start</a>
+  </div>
+  <a class="btn" href="#ask">Ask for an invite</a>
+</div></nav>
 
-<h1>Come and test Waffle</h1>
-<p class="lede">One habit, <b>one photo a day</b>, seen only by the friends you add.
-No streaks, no counters, no strangers. It is not on the App Store yet, so getting
-in takes four steps and about five minutes.</p>
+<div class="wrap">
 
-<h2>Start here</h2>
-<p style="color:var(--ink2);font-size:15px;margin-bottom:10px">Give me the email address
-your <b style="color:var(--ink)">Apple ID</b> uses and I will send you an invite.</p>
-<form class="signup" id="f-beta" novalidate>
-  <input type="email" placeholder="you@icloud.com" aria-label="The email your Apple ID uses" required>
-  <button type="submit">Ask for an invite</button>
-</form>
-<p class="msg"></p>
-<div class="done">You are on the list, <b class="ok-mail"></b>. The invite comes from
-TestFlight rather than from me, so keep an eye on your junk folder.</div>
+  <section class="hero" id="ask">
+    <p class="eyebrow rev">Beta &middot; TestFlight</p>
+    <h1 class="rev d1">Come and test Waffle.</h1>
+    <p class="sub rev d2">One habit, <b>one photo a day</b>, seen only by the friends you
+    add. No streaks, no counters, no strangers. It is not on the App Store yet, so
+    getting in takes four steps and about five minutes.</p>
+    <form class="signup rev d3" id="f-beta" novalidate>
+      <input type="email" placeholder="the email your Apple ID uses" aria-label="The email your Apple ID uses" required>
+      <button class="btn" type="submit">Ask for an invite</button>
+    </form>
+    <p class="msg"></p>
+    <div class="done">You are on the list, <b class="ok-mail"></b>. The invite comes from
+    TestFlight rather than from me, so keep an eye on your junk folder.</div>
+  </section>
 
-<h2>Getting in</h2>
-<ol>
-  <li><b>Give me your Apple ID email, above</b>
-    <span>Not necessarily the address you email from. It has to be the Apple ID on
-    the iPhone you want Waffle on, or the invite will not open.</span></li>
-  <li><b>Wait for an email from TestFlight</b>
-    <span>It comes from Apple, not from me, and the subject line has Waffle in it.
-    Check your junk folder if it has not turned up within a few hours.</span></li>
-  <li><b>Install TestFlight</b>
-    <span>Apple's free app for trying apps before release.
-    <a href="https://apps.apple.com/app/testflight/id899247664">Get it here</a>,
-    or search the App Store for TestFlight. You only ever need it to install
-    updates.</span></li>
-  <li><b>Open the invite and tap Install</b>
-    <span>Waffle lands on your home screen like any other app. Make an account
-    with your email, confirm it from the message we send, and you are in.</span></li>
-</ol>
+  <section class="sec" id="steps">
+    <p class="eyebrow rev">Getting in</p>
+    <h2 class="rev">Four steps, about five minutes.</h2>
+    <div class="steps">
+      <div class="step rev"><div class="num">1</div>
+        <b>Your Apple ID email</b><span>Not necessarily the address you email from. It has
+        to be the Apple ID on the iPhone you want Waffle on, or the invite will not
+        open.</span></div>
+      <div class="step rev d1"><div class="num">2</div>
+        <b>An email from TestFlight</b><span>It comes from Apple rather than from me, and
+        the subject line has Waffle in it. Check your junk folder if it has not turned up
+        within a few hours.</span></div>
+      <div class="step rev d2"><div class="num">3</div>
+        <b>Install TestFlight</b><span>Apple's free app for trying apps before release.
+        <a href="https://apps.apple.com/app/testflight/id899247664" style="color:var(--gold2)">Get
+        it here</a>. You only ever need it to install updates.</span></div>
+      <div class="step rev d3"><div class="num">4</div>
+        <b>Open the invite</b><span>Waffle lands on your home screen like any other app.
+        Make an account, confirm your email from the message we send, and you are
+        in.</span></div>
+    </div>
+  </section>
 
-<h2>Before you start</h2>
-<ul class="plain">
-  <li><b>You need an iPhone on iOS 16.4 or newer.</b> There is no Android version
-    and no iPad layout yet.</li>
-  <li><b>Photos come from the camera, in the moment.</b> There is no way to add one
-    from your camera roll. That is the whole idea rather than a missing feature.</li>
-  <li><b>Nobody sees anything unless you add them.</b> No explore page, no public
-    profile, no follower list. If you have no friends on it yet, your feed is
-    supposed to be empty.</li>
-  <li><b>Bring a friend.</b> Waffle only really works once someone you know is on
-    it too, so it is worth joining in twos and threes.</li>
-</ul>
+  <section class="sec" id="know">
+    <p class="eyebrow rev">Before you start</p>
+    <h2 class="rev">Four things worth knowing.</h2>
+    <div class="cols">
+      <div class="panel rev">
+        <h3>What to expect</h3>
+        <ul class="plain">
+          <li><b>An iPhone on iOS 16.4 or newer.</b> There is no Android version and no
+            iPad layout yet.</li>
+          <li><b>Photos come from the camera, in the moment.</b> There is no way to add one
+            from your camera roll. That is the whole idea rather than a missing feature.</li>
+          <li><b>Nobody sees anything unless you add them.</b> No explore page, no public
+            profile, no follower list. An empty feed is correct until you add someone.</li>
+          <li><b>Bring a friend.</b> Waffle only really works once someone you know is on
+            it too, so it is worth joining in twos and threes.</li>
+        </ul>
+      </div>
+      <div class="panel rev d1">
+        <h3>What it does not do</h3>
+        <ul class="plain">
+          <li><b>Nothing happens when you miss a day.</b> No alert, no broken badge, no
+            guilt. The number of days simply is not there any more.</li>
+          <li><b>Nothing costs money.</b> Payments are not connected, so nothing in the app
+            can charge you.</li>
+          <li><b>No notification comes from a server.</b> Any reminder you get is made on
+            your own phone.</li>
+          <li><b>It will break sometimes.</b> It is a beta made by one person. Settings has
+            a Send feedback row, or email
+            <a href="mailto:support@feedwaffle.com" style="color:var(--gold2)">support@feedwaffle.com</a>.
+            A real person reads it.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<div class="note">
-  <b>It is a beta, made by one person.</b> Things will break. If something looks
-  wrong, tell me: Settings has a Send feedback row, or email
-  <a href="mailto:support@feedwaffle.com">support@feedwaffle.com</a>. A real person
-  reads it, and a bug you mention is one I can actually fix.
+  <section class="sec">
+    <p class="eyebrow rev">Passing it on</p>
+    <h2 class="rev">Show someone this.</h2>
+    <div class="qr rev d1">
+      <img src="/img/beta-qr.svg" alt="QR code linking to feedwaffle.com/beta">
+      <p><b>Point a camera at this</b>It opens this page, so you can show it to someone
+      across a table instead of spelling out a link.</p>
+    </div>
+  </section>
+
 </div>
 
-<h2>What it does not do</h2>
-<ul class="plain">
-  <li><b>Nothing happens when you miss a day.</b> No alert, no broken badge, no
-    guilt. The number of days simply is not there any more.</li>
-  <li><b>Nothing costs money.</b> Payments are not connected, so nothing in the app
-    can charge you.</li>
-  <li><b>No notifications come from a server.</b> Any reminder you get is made on
-    your own phone.</li>
-</ul>
+<footer><div class="wrap">
+  <div>waffle, made by Batter &middot; feedwaffle.com</div>
+  <div><a href="/">What Waffle is</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
+</div></footer>
 
-<h2>Passing it on</h2>
-<div class="qr">
-  <img src="/img/beta-qr.svg" alt="QR code linking to feedwaffle.com/beta">
-  <p><b>Point a camera at this</b>It opens this page, so you can show it to someone
-  across a table instead of spelling out a link.</p>
-</div>
+<script>
+(function () {
+  // Same reveal index.html uses. Anything already on screen shows immediately.
+  var els = document.querySelectorAll('.rev');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (e) { e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
 
-<footer>
-  <a href="/">What Waffle is</a>
-  <a href="/privacy">Privacy</a>
-  <a href="/terms">Terms</a>
-</footer>
-
-</div>
 <script>
 (function () {
   // Insert-only table, so this key can sit here: it is the same public key that
   // ships inside the app, and the waitlist cannot be read with it. Lifted from
-  // index.html deliberately rather than reinvented, so both forms behave the
-  // same and there is only one thing to change.
+  // index.html rather than reinvented, so both forms behave the same.
   var URL = "https://efnbbmmmfmcnutnjjlco.supabase.co";
   var KEY = "sb_publishable_iWIEjHwRhMY9VaE2siJoDw_uvLpMVOO";
 
