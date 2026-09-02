@@ -93,7 +93,19 @@
  /* A waffle row, the same shape the app draws: filled pockets in order, then
     the one that is open, then the days not lived yet. The photos are the ones
     index.html already uses, so this adds no assets. */
- .plate{margin-top:34px;background:var(--card);border:1px solid var(--line);
+ /* Two of him, because the whole page is asking you to bring someone. Alfred
+    keeps his own colours rather than the page's: he is a character, not chrome.
+    transform-box:view-box is what makes the wave pivot on his shoulder instead
+    of the canvas origin, which is the same trap the app hit. */
+ .alfreds{display:flex;align-items:flex-end;gap:2px;margin-top:30px}
+ .alfreds svg{width:92px;height:auto;display:block}
+ .alfreds svg:nth-child(2){width:82px}
+ .wavearm{animation:wave 2.4s ease-in-out infinite;
+   transform-box:view-box;transform-origin:32px 110px}
+ @keyframes wave{0%,58%,100%{transform:rotate(0)}66%{transform:rotate(-16deg)}
+   74%{transform:rotate(6deg)}82%{transform:rotate(-13deg)}90%{transform:rotate(0)}}
+ @media(max-width:700px){.alfreds svg{width:78px}.alfreds svg:nth-child(2){width:70px}}
+ .plate{margin-top:22px;background:var(--card);border:1px solid var(--line);
    border-radius:20px;padding:20px;max-width:620px}
  .plate .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
  .plate .name{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px}
@@ -102,15 +114,20 @@
  .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
  .grid i{aspect-ratio:1;border-radius:5px;background:#efeae2;display:block;
    background-size:cover;background-position:center}
- .grid i.p1{background-image:url(img/coffee.jpg);
-   background-image:image-set(url(img/coffee.webp) type("image/webp"),
-                              url(img/coffee.jpg) type("image/jpeg"))}
- .grid i.p2{background-image:url(img/sunset.jpg);
-   background-image:image-set(url(img/sunset.webp) type("image/webp"),
-                              url(img/sunset.jpg) type("image/jpeg"))}
- .grid i.p3{background-image:url(img/crag.jpg);
-   background-image:image-set(url(img/crag.webp) type("image/webp"),
-                              url(img/crag.jpg) type("image/jpeg"))}
+ /* Seven evenings, from the 6x3 sheet index.html already uses for the same
+    thing. One sprite rather than seven requests, and every pocket is a
+    different sky, which is the point: same habit, different day. */
+ .grid i.f{background-image:url(img/sun-sprite.jpg);
+   background-image:image-set(url(img/sun-sprite.webp) type("image/webp"),
+                              url(img/sun-sprite.jpg) type("image/jpeg"));
+   background-size:600% 300%;background-repeat:no-repeat}
+ .grid i.f1{background-position:0% 0%}
+ .grid i.f2{background-position:20% 0%}
+ .grid i.f3{background-position:40% 0%}
+ .grid i.f4{background-position:60% 0%}
+ .grid i.f5{background-position:100% 0%}
+ .grid i.f6{background-position:0% 50%}
+ .grid i.f7{background-position:20% 50%}
  /* The open pocket: dashed, gold, and the only gold on this page besides the
     step numbers. */
  .grid i.next{background:transparent;border:1.5px dashed var(--gold)}
@@ -145,7 +162,7 @@
    form.signup button{width:100%}
  }
  @media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}
-   .btn:hover,.step:hover{transform:none}}
+   .btn:hover,.step:hover{transform:none}.wavearm{animation:none}}
 </style></head>
 <body>
 
@@ -185,17 +202,23 @@
       invite itself comes from TestFlight rather than from me, so keep an eye on your
       junk folder.</p>
     </div>
-    <div class="plate rev d3">
+    <div class="alfreds rev d3" aria-hidden="true">
+      <svg viewBox="-14 0 208 190"><path class="wavearm" d="M32 110 C16 104 10 88 16 74" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 114 C169 116 175 130 167 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg>
+      <svg viewBox="-14 0 208 190"><path d="M32 114 C11 116 5 130 13 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 114 C169 116 175 130 167 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+
+    <div class="plate rev">
       <div class="row">
-        <span class="name"><span class="dot"></span>Morning coffee</span>
-        <span class="count">3 pockets</span>
+        <span class="name"><span class="dot"></span>Sunset with Michelle</span>
+        <span class="count">7 pockets</span>
       </div>
       <div class="grid">
-        <i class="p1"></i><i class="p2"></i><i class="p3"></i><i class="next"></i>
-        <i></i><i></i><i></i><i></i><i></i><i></i>
+        <i class="f f1"></i><i class="f f2"></i><i class="f f3"></i><i class="f f4"></i>
+        <i class="f f5"></i><i class="f f6"></i><i class="f f7"></i>
+        <i class="next"></i><i></i><i></i>
       </div>
-      <p class="cap">Three days in. The dashed one is today, and the rest are days you
-      have not had yet.</p>
+      <p class="cap">A week in, shared with one friend. The dashed pocket is today.
+      Miss a day and nothing happens: the grid has no holes in it.</p>
     </div>
 
   </section>
