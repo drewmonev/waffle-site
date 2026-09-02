@@ -90,6 +90,32 @@
    border:1px solid var(--line);border-radius:99px;background:var(--paper);color:var(--ink2)}
  .sharenote{font-size:13.5px;color:var(--ink3)}
  @media(max-width:700px){.share{flex-direction:column}.share button{width:100%}}
+ /* A waffle row, the same shape the app draws: filled pockets in order, then
+    the one that is open, then the days not lived yet. The photos are the ones
+    index.html already uses, so this adds no assets. */
+ .plate{margin-top:34px;background:var(--card);border:1px solid var(--line);
+   border-radius:20px;padding:20px;max-width:620px}
+ .plate .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+ .plate .name{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px}
+ .plate .dot{width:9px;height:9px;border-radius:3px;background:var(--gold)}
+ .plate .count{font-size:13.5px;color:var(--ink3)}
+ .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+ .grid i{aspect-ratio:1;border-radius:5px;background:#efeae2;display:block;
+   background-size:cover;background-position:center}
+ .grid i.p1{background-image:url(img/coffee.jpg);
+   background-image:image-set(url(img/coffee.webp) type("image/webp"),
+                              url(img/coffee.jpg) type("image/jpeg"))}
+ .grid i.p2{background-image:url(img/sunset.jpg);
+   background-image:image-set(url(img/sunset.webp) type("image/webp"),
+                              url(img/sunset.jpg) type("image/jpeg"))}
+ .grid i.p3{background-image:url(img/crag.jpg);
+   background-image:image-set(url(img/crag.webp) type("image/webp"),
+                              url(img/crag.jpg) type("image/jpeg"))}
+ /* The open pocket: dashed, gold, and the only gold on this page besides the
+    step numbers. */
+ .grid i.next{background:transparent;border:1.5px dashed var(--gold)}
+ .plate .cap{margin-top:12px;font-size:13.5px;color:var(--ink3)}
+ @media(max-width:520px){.grid{gap:5px}}
  .qr{display:flex;gap:22px;align-items:center;margin-top:26px;padding:22px;
    background:var(--card);border:1px solid var(--line);border-radius:18px;max-width:520px}
  .qr img{width:128px;height:128px;flex:0 0 auto;border-radius:10px;background:#fff;padding:7px}
@@ -142,7 +168,7 @@
     friends you add. It is not on the App Store yet. Put your email in, then send the
     link you get to the two or three people you would actually share a photo with.
     <b>Waffle does nothing on your own</b>, so we let people in as groups.</p>
-    <form class="signup rev d3" id="f-beta" novalidate>
+    <form class="signup rev d2" id="f-beta" novalidate>
       <input type="email" placeholder="the email your Apple ID uses" aria-label="The email your Apple ID uses" required>
       <button class="btn" type="submit">Ask for an invite</button>
     </form>
@@ -159,6 +185,19 @@
       invite itself comes from TestFlight rather than from me, so keep an eye on your
       junk folder.</p>
     </div>
+    <div class="plate rev d3">
+      <div class="row">
+        <span class="name"><span class="dot"></span>Morning coffee</span>
+        <span class="count">3 pockets</span>
+      </div>
+      <div class="grid">
+        <i class="p1"></i><i class="p2"></i><i class="p3"></i><i class="next"></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <p class="cap">Three days in. The dashed one is today, and the rest are days you
+      have not had yet.</p>
+    </div>
+
   </section>
 
   <section class="sec" id="steps">
