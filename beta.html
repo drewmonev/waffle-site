@@ -97,14 +97,24 @@
     keeps his own colours rather than the page's: he is a character, not chrome.
     transform-box:view-box is what makes the wave pivot on his shoulder instead
     of the canvas origin, which is the same trap the app hit. */
- .alfreds{display:flex;align-items:flex-end;gap:2px;margin-top:30px}
- .alfreds svg{width:92px;height:auto;display:block}
- .alfreds svg:nth-child(2){width:82px}
+ /* Text left, the pair right, the waffle row full width beneath both. They sit
+    in the space the headline leaves rather than under the form, where they were
+    small and easy to miss. */
+ .herotop{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:34px;align-items:end}
+ .herotext{min-width:0}
+ .alfreds{display:flex;align-items:flex-end;gap:4px;justify-self:end;padding-bottom:4px}
+ .alfreds svg{width:172px;height:auto;display:block}
+ .alfreds svg:nth-child(2){width:150px}
+ @media(max-width:860px){
+   .herotop{grid-template-columns:1fr;gap:8px}
+   .alfreds{justify-self:start;margin-top:26px}
+   .alfreds svg{width:118px}
+   .alfreds svg:nth-child(2){width:104px}
+ }
  .wavearm{animation:wave 2.4s ease-in-out infinite;
    transform-box:view-box;transform-origin:32px 110px}
  @keyframes wave{0%,58%,100%{transform:rotate(0)}66%{transform:rotate(-16deg)}
    74%{transform:rotate(6deg)}82%{transform:rotate(-13deg)}90%{transform:rotate(0)}}
- @media(max-width:700px){.alfreds svg{width:78px}.alfreds svg:nth-child(2){width:70px}}
  .plate{margin-top:22px;background:var(--card);border:1px solid var(--line);
    border-radius:20px;padding:20px;max-width:620px}
  .plate .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
@@ -179,6 +189,8 @@
 <div class="wrap">
 
   <section class="hero" id="ask">
+    <div class="herotop">
+      <div class="herotext">
     <p class="eyebrow rev">Beta &middot; TestFlight</p>
     <h1 class="rev d1">Bring two friends<br>and test Waffle.</h1>
     <p class="sub rev d2" id="lede">One habit, <b>one photo a day</b>, seen only by the
@@ -202,10 +214,13 @@
       invite itself comes from TestFlight rather than from me, so keep an eye on your
       junk folder.</p>
     </div>
+      </div>
     <div class="alfreds rev d3" aria-hidden="true">
       <svg viewBox="-14 0 208 190"><path class="wavearm" d="M32 110 C16 104 10 88 16 74" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 114 C169 116 175 130 167 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg>
       <svg viewBox="-14 0 208 190"><path d="M32 114 C11 116 5 130 13 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M148 114 C169 116 175 130 167 144" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M67 146 C61 158 59 166 63 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><path d="M107 146 L109 176" fill="none" stroke="#141210" stroke-width="5" stroke-linecap="round"/><rect x="32" y="36" width="116" height="116" rx="20" fill="#f7d074" stroke="#e0a83f" stroke-width="2"/><g fill="#efbe5b"><rect x="43" y="47" width="28" height="28" rx="6"/><rect x="76" y="47" width="28" height="28" rx="6"/><rect x="109" y="47" width="28" height="28" rx="6"/><rect x="43" y="80" width="28" height="28" rx="6"/><rect x="76" y="80" width="28" height="28" rx="6"/><rect x="109" y="80" width="28" height="28" rx="6"/><rect x="76" y="113" width="28" height="28" rx="6"/><rect x="109" y="113" width="28" height="28" rx="6"/></g><rect x="43" y="113" width="28" height="28" rx="6" fill="#d9a441"/><circle cx="65" cy="134" r="4.5" fill="#141210"/><circle cx="115" cy="134" r="4.5" fill="#141210"/><path d="M81 138 Q90 146 99 138" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg>
     </div>
+    </div>
+
 
     <div class="plate rev">
       <div class="row">
