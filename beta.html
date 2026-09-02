@@ -77,6 +77,8 @@
    border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--ink)}
  form.signup input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
  form.signup button{white-space:nowrap}
+ .btn.secondary{background:transparent;color:var(--ink2);border:1px solid var(--line)}
+ .btn.secondary:hover{color:var(--ink)}
  form.signup.sent{display:none}
  .msg{color:#c0392b;font-size:13.5px;margin-top:9px;min-height:1px}
  .done{display:none;margin-top:26px;max-width:520px;padding:18px 20px;background:var(--card);
@@ -89,6 +91,9 @@
  .share input{flex:1;min-width:0;font:inherit;font-size:14.5px;padding:12px 15px;
    border:1px solid var(--line);border-radius:99px;background:var(--paper);color:var(--ink2)}
  .sharenote{font-size:13.5px;color:var(--ink3)}
+ .hint{font-size:13.5px;color:var(--ink3);margin-top:9px;max-width:520px}
+ /* It explains the field, so it goes when the field does. */
+ form.signup.sent ~ .hint{display:none}
  @media(max-width:700px){.share{flex-direction:column}.share button{width:100%}}
  /* A waffle row, the same shape the app draws: filled pockets in order, then
     the one that is open, then the days not lived yet. The photos are the ones
@@ -205,12 +210,15 @@
       <button class="btn" type="submit">Ask for an invite</button>
     </form>
     <p class="msg"></p>
+    <p class="hint rev d2">Not sure which one? On your iPhone it is the address at the
+    very top of Settings.</p>
     <div class="done">
       <p><b>You are on the list, <span class="ok-mail"></span>.</b> Now the half that
       matters: send this to two or three friends. When they are on it too, you all get
       invited together, and the app has something to show you on day one.</p>
       <div class="share">
         <input id="sharelink" readonly aria-label="Your link to share">
+        <button class="btn" id="share" type="button" hidden>Send to a friend</button>
         <button class="btn" id="copy" type="button">Copy</button>
       </div>
       <p class="sharenote">Anyone who joins through your link is put in your group. The
@@ -417,6 +425,21 @@
       fail('That did not send. Check your connection and try again.');
     });
   });
+
+  // The whole group mechanic depends on this link being forwarded, so on a
+  // phone offer the share sheet: it opens Messages with the words already in
+  // it. Copy stays as the fallback, and as the desktop answer.
+  var MESSAGE = 'Come and test Waffle with me. One photo a day, just us, no ' +
+    'strangers. It needs a couple of friends to work, so I am asking you: ';
+  var share = document.getElementById('share');
+  if (navigator.share) {
+    share.hidden = false;
+    document.getElementById('copy').classList.add('secondary');
+    share.addEventListener('click', function () {
+      navigator.share({ text: MESSAGE, url: document.getElementById('sharelink').value })
+        .catch(function () {});   // a cancelled share sheet is not an error
+    });
+  }
 
   var copy = document.getElementById('copy');
   copy.addEventListener('click', function () {
