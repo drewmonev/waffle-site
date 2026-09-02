@@ -95,6 +95,15 @@
  .ph-top{position:absolute;top:38px;left:0;right:0;z-index:2;display:flex;align-items:center;
    justify-content:space-between;padding:0 16px;color:#fff}
  .ph-top .wm{font-size:19px;color:#fff}
+ /* The dot matrix is sized in em (.14 of the font), which at 19px lands on
+    2.66px dots with 1.33px gaps. Sub-pixel, so the browser antialiases them
+    into a smudge and the mark reads as blurred rather than as nine squares.
+    The nav's 22px happens to give 3.08px and gets away with it. Pinned to
+    whole pixels here instead, and the radius dropped: 1px of rounding on a 3px
+    square is a third of it. */
+ .ph-top .dm{grid-template-columns:repeat(3,3px);grid-template-rows:repeat(3,3px);
+   gap:1px;margin-bottom:3px}
+ .ph-top .dm span{border-radius:0}
  .ph-icons{display:flex;gap:13px;align-items:center}
  .ph-icons svg{width:17px;height:17px;display:block;opacity:.95}
  /* The content is a sheet that begins where the cover ends, with the avatar
