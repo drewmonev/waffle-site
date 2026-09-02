@@ -46,6 +46,25 @@
  ul.plain li:before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;
    border-radius:2px;background:var(--line)}
  ul.plain li b{color:var(--ink);font-weight:600}
+ form.signup{display:flex;gap:8px;margin-top:6px}
+ form.signup input{flex:1;min-width:0;font:inherit;font-size:16px;padding:13px 15px;
+   border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+ form.signup input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+ form.signup button{font:inherit;font-weight:600;font-size:15px;padding:13px 20px;border:0;
+   border-radius:12px;background:var(--ink);color:var(--paper);cursor:pointer}
+ form.signup button:disabled{opacity:.5;cursor:default}
+ form.signup.sent{display:none}
+ .msg{color:#c0392b;font-size:13.5px;margin-top:8px;min-height:1px}
+ .done{display:none;margin-top:6px;padding:15px 17px;background:var(--card);
+   border:1px solid var(--line);border-radius:14px;font-size:15px}
+ .done b{font-weight:600}
+ form.signup.sent + .msg + .done{display:block}
+ .qr{display:flex;gap:18px;align-items:center;margin-top:6px;padding:16px;
+   background:var(--card);border:1px solid var(--line);border-radius:16px}
+ .qr img{width:118px;height:118px;flex:0 0 auto;border-radius:8px;background:#fff;padding:6px}
+ .qr p{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.5}
+ .qr p b{color:var(--ink);font-weight:600;display:block;margin-bottom:3px}
+ @media(max-width:430px){.qr{flex-direction:column;text-align:center}}
  footer{margin-top:46px;padding-top:20px;border-top:1px solid var(--line);
    font-size:13px;color:var(--ink3)}
  footer a{color:var(--ink2);text-decoration:none;margin-right:14px}
@@ -63,11 +82,22 @@
 No streaks, no counters, no strangers. It is not on the App Store yet, so getting
 in takes four steps and about five minutes.</p>
 
+<h2>Start here</h2>
+<p style="color:var(--ink2);font-size:15px;margin-bottom:10px">Give me the email address
+your <b style="color:var(--ink)">Apple ID</b> uses and I will send you an invite.</p>
+<form class="signup" id="f-beta" novalidate>
+  <input type="email" placeholder="you@icloud.com" aria-label="The email your Apple ID uses" required>
+  <button type="submit">Ask for an invite</button>
+</form>
+<p class="msg"></p>
+<div class="done">You are on the list, <b class="ok-mail"></b>. The invite comes from
+TestFlight rather than from me, so keep an eye on your junk folder.</div>
+
 <h2>Getting in</h2>
 <ol>
-  <li><b>Send me the email address your Apple ID uses</b>
-    <span>Not necessarily the one you email from. It has to be the Apple ID on the
-    iPhone you want Waffle on, or the invite will not open.</span></li>
+  <li><b>Give me your Apple ID email, above</b>
+    <span>Not necessarily the address you email from. It has to be the Apple ID on
+    the iPhone you want Waffle on, or the invite will not open.</span></li>
   <li><b>Wait for an email from TestFlight</b>
     <span>It comes from Apple, not from me, and the subject line has Waffle in it.
     Check your junk folder if it has not turned up within a few hours.</span></li>
@@ -111,10 +141,72 @@ in takes four steps and about five minutes.</p>
     your own phone.</li>
 </ul>
 
+<h2>Passing it on</h2>
+<div class="qr">
+  <img src="/img/beta-qr.svg" alt="QR code linking to feedwaffle.com/beta">
+  <p><b>Point a camera at this</b>It opens this page, so you can show it to someone
+  across a table instead of spelling out a link.</p>
+</div>
+
 <footer>
   <a href="/">What Waffle is</a>
   <a href="/privacy">Privacy</a>
   <a href="/terms">Terms</a>
 </footer>
 
-</div></body></html>
+</div>
+<script>
+(function () {
+  // Insert-only table, so this key can sit here: it is the same public key that
+  // ships inside the app, and the waitlist cannot be read with it. Lifted from
+  // index.html deliberately rather than reinvented, so both forms behave the
+  // same and there is only one thing to change.
+  var URL = "https://efnbbmmmfmcnutnjjlco.supabase.co";
+  var KEY = "sb_publishable_iWIEjHwRhMY9VaE2siJoDw_uvLpMVOO";
+
+  var form = document.getElementById('f-beta');
+  if (!form) return;
+  var input = form.querySelector('input[type=email]');
+  var button = form.querySelector('button');
+  var msg = document.querySelector('.msg');
+  var mail = document.querySelector('.ok-mail');
+
+  function fail(t) { msg.textContent = t; input.focus(); }
+  input.addEventListener('input', function () { msg.textContent = ''; });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = (input.value || '').trim();
+    // A courtesy check. The real one is a CHECK constraint in the database,
+    // because anything a browser validates, a browser can skip.
+    if (email.length < 6 || email.indexOf('@') < 1 || email.indexOf('.', email.indexOf('@')) < 0) {
+      fail('That does not look like an email address.');
+      return;
+    }
+    msg.textContent = '';
+    button.disabled = true;
+    fetch(URL + '/rest/v1/waitlist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: KEY, Authorization: 'Bearer ' + KEY, Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({ email: email, source: 'beta' }),
+    }).then(function (r) {
+      // 409 is the unique index: already on the list, which from where they are
+      // standing is a success. Same wording either way, so nobody can use this
+      // form to discover whether an address is on it.
+      if (r.ok || r.status === 409) {
+        mail.textContent = email;   // textContent, never innerHTML
+        form.classList.add('sent');
+        return;
+      }
+      throw new Error(String(r.status));
+    }).catch(function () {
+      button.disabled = false;
+      fail('That did not send. Check your connection and try again.');
+    });
+  });
+})();
+</script>
+</body></html>
