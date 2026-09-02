@@ -83,6 +83,13 @@
    border:1px solid var(--line);border-radius:18px;font-size:15.5px;color:var(--ink2)}
  .done b{color:var(--ink);font-weight:600}
  form.signup.sent ~ .done{display:block}
+ .done p{margin-bottom:14px}
+ .done p:last-child{margin-bottom:0}
+ .share{display:flex;gap:9px;margin-bottom:12px}
+ .share input{flex:1;min-width:0;font:inherit;font-size:14.5px;padding:12px 15px;
+   border:1px solid var(--line);border-radius:99px;background:var(--paper);color:var(--ink2)}
+ .sharenote{font-size:13.5px;color:var(--ink3)}
+ @media(max-width:700px){.share{flex-direction:column}.share button{width:100%}}
  .qr{display:flex;gap:22px;align-items:center;margin-top:26px;padding:22px;
    background:var(--card);border:1px solid var(--line);border-radius:18px;max-width:520px}
  .qr img{width:128px;height:128px;flex:0 0 auto;border-radius:10px;background:#fff;padding:7px}
@@ -130,17 +137,28 @@
 
   <section class="hero" id="ask">
     <p class="eyebrow rev">Beta &middot; TestFlight</p>
-    <h1 class="rev d1">Come and test Waffle.</h1>
-    <p class="sub rev d2">One habit, <b>one photo a day</b>, seen only by the friends you
-    add. No streaks, no counters, no strangers. It is not on the App Store yet, so
-    getting in takes four steps and about five minutes.</p>
+    <h1 class="rev d1">Bring two friends<br>and test Waffle.</h1>
+    <p class="sub rev d2" id="lede">One habit, <b>one photo a day</b>, seen only by the
+    friends you add. It is not on the App Store yet. Put your email in, then send the
+    link you get to the two or three people you would actually share a photo with.
+    <b>Waffle does nothing on your own</b>, so we let people in as groups.</p>
     <form class="signup rev d3" id="f-beta" novalidate>
       <input type="email" placeholder="the email your Apple ID uses" aria-label="The email your Apple ID uses" required>
       <button class="btn" type="submit">Ask for an invite</button>
     </form>
     <p class="msg"></p>
-    <div class="done">You are on the list, <b class="ok-mail"></b>. The invite comes from
-    TestFlight rather than from me, so keep an eye on your junk folder.</div>
+    <div class="done">
+      <p><b>You are on the list, <span class="ok-mail"></span>.</b> Now the half that
+      matters: send this to two or three friends. When they are on it too, you all get
+      invited together, and the app has something to show you on day one.</p>
+      <div class="share">
+        <input id="sharelink" readonly aria-label="Your link to share">
+        <button class="btn" id="copy" type="button">Copy</button>
+      </div>
+      <p class="sharenote">Anyone who joins through your link is put in your group. The
+      invite itself comes from TestFlight rather than from me, so keep an eye on your
+      junk folder.</p>
+    </div>
   </section>
 
   <section class="sec" id="steps">
@@ -179,8 +197,9 @@
             from your camera roll. That is the whole idea rather than a missing feature.</li>
           <li><b>Nobody sees anything unless you add them.</b> No explore page, no public
             profile, no follower list. An empty feed is correct until you add someone.</li>
-          <li><b>Bring a friend.</b> Waffle only really works once someone you know is on
-            it too, so it is worth joining in twos and threes.</li>
+          <li><b>You need at least one other person.</b> A feed with nobody in it is
+            correct and also pointless, which is why invites go out to groups rather
+            than to whoever asked first.</li>
         </ul>
       </div>
       <div class="panel rev d1">
@@ -250,6 +269,33 @@
   var msg = document.querySelector('.msg');
   var mail = document.querySelector('.ok-mail');
 
+  // A group is a shared tag on the waitlist rows, nothing more. Whoever arrives
+  // with ?g= joins that group; whoever arrives cold starts one. Deliberately not
+  // a form that collects other people's addresses: those people have not agreed
+  // to be emailed, and a beta that starts by mailing strangers is spam. The
+  // person forwards their own link instead, and each friend opts in themselves.
+  function newGroup() {
+    var a = 'abcdefghijkmnpqrstuvwxyz23456789', out = '';
+    var r = new Uint8Array(8);
+    (window.crypto || window.msCrypto).getRandomValues(r);
+    for (var i = 0; i < 8; i++) out += a[r[i] % a.length];
+    return out;
+  }
+  var params = new URLSearchParams(location.search);
+  var joined = (params.get('g') || '').replace(/[^a-z0-9]/g, '').slice(0, 8);
+  var group = joined || newGroup();
+
+  // Somebody arriving on a friend's link is answering an invitation, not
+  // discovering a product. Say so, or the page reads as if they are first.
+  if (joined) {
+    var lede = document.getElementById('lede');
+    if (lede) {
+      lede.innerHTML = 'A friend wants you on Waffle with them. One habit, ' +
+        '<b>one photo a day</b>, seen only by the people you add. Put your email in and ' +
+        'you will be invited together, so there is something to see on day one.';
+    }
+  }
+
   function fail(t) { msg.textContent = t; input.focus(); }
   input.addEventListener('input', function () { msg.textContent = ''; });
 
@@ -270,14 +316,19 @@
         'Content-Type': 'application/json',
         apikey: KEY, Authorization: 'Bearer ' + KEY, Prefer: 'return=minimal',
       },
-      body: JSON.stringify({ email: email, source: 'beta' }),
+      body: JSON.stringify({ email: email, source: 'beta:g:' + group }),
     }).then(function (r) {
       // 409 is the unique index: already on the list, which from where they are
       // standing is a success. Same wording either way, so nobody can use this
       // form to discover whether an address is on it.
       if (r.ok || r.status === 409) {
         mail.textContent = email;   // textContent, never innerHTML
+        var link = location.origin + '/beta?g=' + group;
+        document.getElementById('sharelink').value = link;
         form.classList.add('sent');
+        // The link is the point of the screen, so put it on the clipboard
+        // without being asked. Silent if the browser refuses.
+        if (navigator.clipboard) navigator.clipboard.writeText(link).catch(function () {});
         return;
       }
       throw new Error(String(r.status));
@@ -285,6 +336,19 @@
       button.disabled = false;
       fail('That did not send. Check your connection and try again.');
     });
+  });
+
+  var copy = document.getElementById('copy');
+  copy.addEventListener('click', function () {
+    var box = document.getElementById('sharelink');
+    var done = function () { copy.textContent = 'Copied'; setTimeout(function () {
+      copy.textContent = 'Copy'; }, 1800); };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(box.value).then(done, function () { box.select(); });
+    } else {
+      // Older Safari: selecting it at least lets them copy by hand.
+      box.select(); document.execCommand('copy'); done();
+    }
   });
 })();
 </script>
