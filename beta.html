@@ -103,8 +103,10 @@
  .herotop{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:34px;align-items:end}
  .herotext{min-width:0}
  .alfreds{display:flex;align-items:flex-end;gap:4px;justify-self:end;padding-bottom:4px}
- .alfreds svg{width:172px;height:auto;display:block}
- .alfreds svg:nth-child(2){width:150px}
+ /* Same size, both of them. The arms already tell them apart: one waves, one
+    does not. Sizing one down as well made it read as the same waffle further
+    away rather than as a second person. */
+ .alfreds svg{width:168px;height:auto;display:block}
  /* Gone below 860px rather than shrunk. On a phone the hero is already a tall
     stack, and two waffles between the form and the grid only push the thing
     the page is asking for further down the screen. */
