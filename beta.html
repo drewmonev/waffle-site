@@ -105,11 +105,12 @@
  .alfreds{display:flex;align-items:flex-end;gap:4px;justify-self:end;padding-bottom:4px}
  .alfreds svg{width:172px;height:auto;display:block}
  .alfreds svg:nth-child(2){width:150px}
+ /* Gone below 860px rather than shrunk. On a phone the hero is already a tall
+    stack, and two waffles between the form and the grid only push the thing
+    the page is asking for further down the screen. */
  @media(max-width:860px){
-   .herotop{grid-template-columns:1fr;gap:8px}
-   .alfreds{justify-self:start;margin-top:26px}
-   .alfreds svg{width:118px}
-   .alfreds svg:nth-child(2){width:104px}
+   .herotop{grid-template-columns:1fr;gap:0}
+   .alfreds{display:none}
  }
  .wavearm{animation:wave 2.4s ease-in-out infinite;
    transform-box:view-box;transform-origin:32px 110px}
